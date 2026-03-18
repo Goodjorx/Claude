@@ -8,7 +8,7 @@ export const Root: React.FC = () => {
       <Composition
         id="NubionVideo"
         component={NubionVideo}
-        durationInFrames={450} // 15 seconds at 30fps
+        durationInFrames={720} // 24 seconds at 30fps
         fps={30}
         width={1920}
         height={1080}

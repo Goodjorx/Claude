@@ -7,6 +7,7 @@ import {
   spring,
   Easing,
 } from "remotion";
+import { NubionRobotIcon } from "../NubionLogo";
 
 // Animated particle dot
 const Particle: React.FC<{
@@ -134,40 +135,37 @@ export const HeroScene: React.FC = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          gap: 20,
+          gap: 24,
           transform: `scale(${logoScale})`,
           opacity: logoOpacity,
           marginBottom: 24,
         }}
       >
-        {/* N icon mark */}
+        {/* Nubion robot icon on dark pill — matches uploaded logo */}
         <div
           style={{
-            width: 96,
-            height: 96,
+            padding: "16px 20px",
             borderRadius: 24,
-            background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+            background: "#1e1b4b",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 0 40px rgba(99,102,241,0.6), 0 0 80px rgba(99,102,241,0.3)",
+            gap: 16,
+            boxShadow: "0 0 40px rgba(45,232,180,0.2), 0 0 80px rgba(99,102,241,0.2)",
+            border: "1px solid rgba(255,255,255,0.08)",
           }}
         >
-          <span style={{ fontSize: 56, fontWeight: 900, color: "white", letterSpacing: -2 }}>N</span>
+          <NubionRobotIcon size={72} />
+          <span
+            style={{
+              fontSize: 80,
+              fontWeight: 700,
+              color: "white",
+              letterSpacing: -2,
+            }}
+          >
+            Nubion
+          </span>
         </div>
-        <span
-          style={{
-            fontSize: 96,
-            fontWeight: 800,
-            color: "white",
-            letterSpacing: -3,
-            background: "linear-gradient(90deg, #fff 0%, #c7d2fe 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}
-        >
-          Nubion
-        </span>
       </div>
 
       {/* Subtitle */}

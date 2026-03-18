@@ -7,6 +7,7 @@ import {
   spring,
   Easing,
 } from "remotion";
+import { NubionRobotIcon } from "../NubionLogo";
 
 export const CtaScene: React.FC = () => {
   const frame = useCurrentFrame();
@@ -94,23 +95,15 @@ export const CtaScene: React.FC = () => {
           alignItems: "center",
           gap: 16,
           zIndex: 1,
+          background: "#1e1b4b",
+          padding: "14px 24px",
+          borderRadius: 20,
+          border: "1px solid rgba(255,255,255,0.08)",
+          boxShadow: "0 0 40px rgba(45,232,180,0.15)",
         }}
       >
-        <div
-          style={{
-            width: 72,
-            height: 72,
-            borderRadius: 18,
-            background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 0 30px rgba(99,102,241,0.6)",
-          }}
-        >
-          <span style={{ fontSize: 42, fontWeight: 900, color: "white" }}>N</span>
-        </div>
-        <span style={{ fontSize: 64, fontWeight: 800, color: "white", letterSpacing: -2 }}>
+        <NubionRobotIcon size={48} />
+        <span style={{ fontSize: 56, fontWeight: 700, color: "white", letterSpacing: -1.5 }}>
           Nubion
         </span>
       </div>
