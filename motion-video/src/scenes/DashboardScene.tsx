@@ -167,7 +167,7 @@ export const DashboardScene: React.FC = () => {
             textTransform: "uppercase",
           }}
         >
-          Your Dashboard
+          Tu Panel
         </span>
       </div>
 
@@ -203,23 +203,23 @@ export const DashboardScene: React.FC = () => {
             <NubionRobotIcon size={28} />
             <div>
               <div style={{ fontSize: 15, fontWeight: 700, color: "white" }}>Nubion</div>
-              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>Build your own Agents</div>
+              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>Crea tus propios Agentes</div>
             </div>
           </div>
 
-          <NavItem label="Home" icon="🏠" active />
-          <NavItem label="Agents" icon="🤖" />
-          <NavItem label="Analytics" icon="📊" />
-          <NavItem label="Integrations" icon="🔗" />
-          <NavItem label="Settings" icon="⚙️" />
+          <NavItem label="Inicio" icon="🏠" active />
+          <NavItem label="Entrenamiento" icon="🤖" />
+          <NavItem label="Integraciones" icon="🔗" />
+          <NavItem label="Conecta" icon="🔌" />
+          <NavItem label="Configuración" icon="⚙️" />
 
           {/* Spacer */}
           <div style={{ flex: 1 }} />
 
           {/* Stats */}
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            <StatCard label="Chat" value="999.9M" sub="Remaining Words" />
-            <StatCard label="AI Agents" value="997" sub="Remaining" />
+            <StatCard label="Chat" value="999.9M" sub="Palabras restantes" />
+            <StatCard label="Agentes IA" value="997" sub="Restantes" />
           </div>
 
           {/* Upgrade button */}
@@ -243,7 +243,7 @@ export const DashboardScene: React.FC = () => {
         <div style={{ flex: 1, background: "#f8f9fb", padding: "32px", display: "flex", flexDirection: "column", gap: 28 }}>
           {/* Top bar */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ fontSize: 28, fontWeight: 800, color: "#1e1b4b" }}>Dashboard</span>
+            <span style={{ fontSize: 28, fontWeight: 800, color: "#1e1b4b" }}>Panel Principal</span>
             <div style={{ width: 40, height: 40, borderRadius: "50%", background: "#e2e0ed", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>
               👤
             </div>
@@ -260,10 +260,10 @@ export const DashboardScene: React.FC = () => {
             }}
           >
             <div style={{ fontSize: 20, fontWeight: 700, color: "#1e1b4b", marginBottom: 8 }}>
-              Create a New AI Agent
+              Crear un Nuevo Agente IA
             </div>
             <div style={{ fontSize: 15, color: "#666", marginBottom: 16 }}>
-              Check out our detailed documentation to learn how to format your data and create the perfect AI Agent.
+              Consulta nuestra documentación detallada para aprender a formatear tus datos y crear el Agente IA perfecto.
             </div>
             <div
               style={{
@@ -276,7 +276,7 @@ export const DashboardScene: React.FC = () => {
                 color: "#0a0a1a",
               }}
             >
-              Create AI Agent
+              Crear Agente IA
             </div>
           </div>
 
@@ -288,19 +288,19 @@ export const DashboardScene: React.FC = () => {
             }}
           >
             <div style={{ fontSize: 20, fontWeight: 700, color: "#1e1b4b", marginBottom: 20 }}>
-              Your AI Agents
+              Tus Agentes IA
             </div>
             <div style={{ display: "flex", gap: 20 }}>
               <AgentCard
                 name="Clinica CenteIA"
-                tag="General AI Agent"
-                updated="Last updated 34 days"
+                tag="General Agente IA"
+                updated="Actualizado hace 34 días"
                 delay={35}
               />
               <AgentCard
                 name="Nikebot"
-                tag="General AI Agent"
-                updated="Last updated today"
+                tag="General Agente IA"
+                updated="Actualizado hoy"
                 delay={48}
               />
               {/* "Add new" placeholder */}
@@ -327,7 +327,7 @@ export const DashboardScene: React.FC = () => {
                   >
                     <div style={{ fontSize: 32, color: "#2de8b4" }}>+</div>
                     <div style={{ fontSize: 14, color: "#2de8b4", fontWeight: 600, textAlign: "center" }}>
-                      Create New Agent
+                      Crear Nuevo Agente
                     </div>
                   </div>
                 );

@@ -185,7 +185,7 @@ export const HeroScene: React.FC = () => {
             textTransform: "uppercase",
           }}
         >
-          AI Chatbot Platform
+          Plataforma de Agentes IA
         </span>
       </div>
 
@@ -199,7 +199,7 @@ export const HeroScene: React.FC = () => {
             letterSpacing: 1,
           }}
         >
-          Making AI accessible to every business
+          IA accesible para cada negocio
         </span>
       </div>
     </AbsoluteFill>

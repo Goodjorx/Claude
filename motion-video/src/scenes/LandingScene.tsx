@@ -184,14 +184,14 @@ export const LandingScene: React.FC = () => {
           paddingRight: 40,
         }}
       >
-        {/* Line 1: "Create your" */}
+        {/* Line 1: "Crea tu" */}
         <div style={{ transform: `translateX(${h1X}px)`, opacity: h1Opacity }}>
           <span style={{ fontSize: 78, fontWeight: 900, color: "white", letterSpacing: -3, lineHeight: 1.05 }}>
-            Create your
+            Crea tu
           </span>
         </div>
 
-        {/* Line 2: "AI Agent" — green accent */}
+        {/* Line 2: "Agente IA" — green accent */}
         <div style={{ transform: `translateX(${h2X}px)`, opacity: h2Opacity }}>
           <span
             style={{
@@ -204,17 +204,17 @@ export const LandingScene: React.FC = () => {
               WebkitTextFillColor: "transparent",
             }}
           >
-            AI Agent
+            Agente IA
           </span>
           <span style={{ fontSize: 78, fontWeight: 900, color: "white", letterSpacing: -3, lineHeight: 1.05 }}>
-            {" "}always
+            {" "}ahora
           </span>
         </div>
 
-        {/* Line 3: "in less than 30 seconds" */}
+        {/* Line 3: "en menos de 30 segundos" */}
         <div style={{ transform: `translateX(${h3X}px)`, opacity: h3Opacity, marginTop: 4 }}>
           <span style={{ fontSize: 60, fontWeight: 800, color: "rgba(255,255,255,0.75)", letterSpacing: -2, lineHeight: 1.1 }}>
-            in less than{" "}
+            en menos de{" "}
           </span>
           <span
             style={{
@@ -227,14 +227,14 @@ export const LandingScene: React.FC = () => {
               WebkitTextFillColor: "transparent",
             }}
           >
-            30 seconds
+            30 segundos
           </span>
         </div>
 
         {/* Subtitle */}
         <div style={{ opacity: subOpacity, marginTop: 20 }}>
           <p style={{ fontSize: 22, color: "rgba(255,255,255,0.5)", margin: 0, fontWeight: 400, lineHeight: 1.5 }}>
-            No code required · For Web, WhatsApp and Telegram
+            Sin código · Para Web, WhatsApp y Telegram
           </p>
         </div>
 
@@ -260,7 +260,7 @@ export const LandingScene: React.FC = () => {
               letterSpacing: -0.3,
             }}
           >
-            Create your AI Agent in 30s →
+            Crea tu Agente IA en 30s →
           </div>
         </div>
       </div>

@@ -3,18 +3,20 @@ import { AbsoluteFill, Series } from "remotion";
 import { HeroScene } from "./scenes/HeroScene";
 import { LandingScene } from "./scenes/LandingScene";
 import { DashboardScene } from "./scenes/DashboardScene";
-import { FeaturesScene } from "./scenes/FeaturesScene";
+import { ConfigScene } from "./scenes/ConfigScene";
+import { TestingScene } from "./scenes/TestingScene";
 import { DeployScene } from "./scenes/DeployScene";
 import { CtaScene } from "./scenes/CtaScene";
 
-// 24 seconds total @ 30fps = 720 frames
+// 29 seconds total @ 30fps = 870 frames
 // Scene breakdown:
-//   0–90    (3s)  — Hero: Brand reveal with real Nubion logo
-//  90–240   (5s)  — Landing: "Create your AI Agent always" hero split
-// 240–390   (5s)  — Dashboard: Real app UI showcase
-// 390–510   (4s)  — Features: 3 feature cards
-// 510–600   (3s)  — Deploy: Web / WhatsApp / Telegram platforms
-// 600–720   (4s)  — CTA: Call to action + URL
+//   0–90    (3s)  — Hero: Brand reveal — Nubion
+//  90–210   (4s)  — Landing: "Crea tu Agente IA en menos de 30 segundos"
+// 210–300   (3s)  — Dashboard: Panel con agentes IA
+// 300–420   (4s)  — Config: Configuración del agente
+// 420–630   (7s)  — Testing: Probar Agente IA en vivo (escena principal)
+// 630–720   (3s)  — Deploy: Web, WhatsApp, Telegram
+// 720–870   (5s)  — CTA: Comienza gratis
 
 export const NubionVideo: React.FC = () => {
   return (
@@ -24,23 +26,27 @@ export const NubionVideo: React.FC = () => {
           <HeroScene />
         </Series.Sequence>
 
-        <Series.Sequence durationInFrames={150}>
+        <Series.Sequence durationInFrames={120}>
           <LandingScene />
         </Series.Sequence>
 
-        <Series.Sequence durationInFrames={150}>
+        <Series.Sequence durationInFrames={90}>
           <DashboardScene />
         </Series.Sequence>
 
         <Series.Sequence durationInFrames={120}>
-          <FeaturesScene />
+          <ConfigScene />
+        </Series.Sequence>
+
+        <Series.Sequence durationInFrames={210}>
+          <TestingScene />
         </Series.Sequence>
 
         <Series.Sequence durationInFrames={90}>
           <DeployScene />
         </Series.Sequence>
 
-        <Series.Sequence durationInFrames={120}>
+        <Series.Sequence durationInFrames={150}>
           <CtaScene />
         </Series.Sequence>
       </Series>

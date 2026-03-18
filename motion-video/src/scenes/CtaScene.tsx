@@ -120,12 +120,12 @@ export const CtaScene: React.FC = () => {
         <div
           style={{ fontSize: 52, fontWeight: 800, color: "white", letterSpacing: -1.5, marginBottom: 10 }}
         >
-          Ready to transform your customer service?
+          ¿Listo para transformar tu atención al cliente?
         </div>
         <div
           style={{ fontSize: 24, color: "rgba(255,255,255,0.5)", fontWeight: 400 }}
         >
-          Join thousands of businesses already using AI
+          Únete a miles de negocios que ya usan IA
         </div>
       </div>
 
@@ -149,7 +149,7 @@ export const CtaScene: React.FC = () => {
             letterSpacing: -0.5,
           }}
         >
-          Get started free →
+          Comienza gratis →
         </div>
       </div>
 

@@ -51,7 +51,7 @@ const PlatformBadge: React.FC<PlatformBadgeProps> = ({
       <div>
         <div style={{ fontSize: 28, fontWeight: 700, color: "white" }}>{label}</div>
         <div style={{ fontSize: 16, color: "rgba(255,255,255,0.45)", marginTop: 2 }}>
-          Deploy here
+          Despliega aquí
         </div>
       </div>
     </div>
@@ -74,7 +74,7 @@ export const DeployScene: React.FC = () => {
   );
 
   const platforms: PlatformBadgeProps[] = [
-    { label: "Website", emoji: "🌐", color: "#6366f1", delay: 15, fromX: -120 },
+    { label: "Sitio Web", emoji: "🌐", color: "#6366f1", delay: 15, fromX: -120 },
     { label: "WhatsApp", emoji: "💬", color: "#22c55e", delay: 25, fromX: 0 },
     { label: "Telegram", emoji: "✈️", color: "#3b82f6", delay: 35, fromX: 120 },
   ];
@@ -135,10 +135,10 @@ export const DeployScene: React.FC = () => {
         <div
           style={{ fontSize: 52, fontWeight: 800, color: "white", letterSpacing: -1.5, marginBottom: 12 }}
         >
-          Deploy everywhere your customers are
+          Despliega donde están tus clientes
         </div>
         <div style={{ opacity: subOpacity, fontSize: 24, color: "rgba(255,255,255,0.45)" }}>
-          One chatbot · Multiple platforms · Instant setup
+          Un agente · Múltiples plataformas · Configuración inmediata
         </div>
       </div>
 
