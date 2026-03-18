@@ -55,11 +55,21 @@ const TypingIndicator: React.FC<{ delay: number }> = ({ delay }) => {
   const opacity = interpolate(s, [0, 1], [0, 1]);
   const y = interpolate(s, [0, 1], [12, 0]);
 
-  const makeDot = (offset: number) =>
-    interpolate((frame - delay) % 36, [offset, offset + 12, offset + 24, 36], [0.3, 1, 0.3, 0.3], {
+  const makeDot = (offset: number) => {
+    const t = (frame - delay) % 36;
+    const rangeEnd = offset + 24;
+    if (rangeEnd >= 36) {
+      // Last dot: peak at offset+12, fade back to dim exactly at frame 36 — no duplicate
+      return interpolate(t, [offset, offset + 12, 36], [0.3, 1, 0.3], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      });
+    }
+    return interpolate(t, [offset, offset + 12, rangeEnd, 36], [0.3, 1, 0.3, 0.3], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     });
+  };
 
   return (
     <div
