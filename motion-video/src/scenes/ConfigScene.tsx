@@ -7,6 +7,7 @@ import {
   spring,
 } from "remotion";
 import { NubionRobotIcon } from "../NubionLogo";
+import { MouseCursor } from "../components/MouseCursor";
 
 const NavItem: React.FC<{ label: string; icon: string; active?: boolean }> = ({
   label,
@@ -76,15 +77,32 @@ export const ConfigScene: React.FC = () => {
   const panelY = interpolate(panelSpring, [0, 1], [50, 0]);
   const panelOpacity = interpolate(panelSpring, [0, 1], [0, 1]);
 
-  // Pulsing glow on the "Probar Agente IA" button
-  const btnGlow = interpolate(frame % 40, [0, 20, 40], [0.6, 1.0, 0.6], {
+  // Button highlight intensifies as cursor approaches (frame 65+)
+  const btnHighlight = interpolate(frame, [55, 80], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
-  const btnSpring = spring({ frame: frame - 25, fps, config: { damping: 70, stiffness: 120 } });
+  // Pulsing glow baseline
+  const btnGlow = interpolate(frame % 40, [0, 20, 40], [0.55, 1.0, 0.55], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  const btnSpring = spring({ frame: frame - 20, fps, config: { damping: 70, stiffness: 120 } });
   const btnScale = interpolate(btnSpring, [0, 0.8, 1], [0.7, 1.05, 1]);
   const btnOpacity = interpolate(btnSpring, [0, 1], [0, 1]);
+
+  // Button press scale at click (frame 88)
+  const pressProgress = interpolate(frame, [88, 94, 100], [1, 0.93, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  // The "Probar Agente IA" button is at approx x=1530, y=326 in 1920×1080 space
+  // (panel starts at x=260, button is near right edge of panel header)
+  const BTN_X = 1530;
+  const BTN_Y = 326;
 
   return (
     <AbsoluteFill
@@ -151,13 +169,23 @@ export const ConfigScene: React.FC = () => {
         </div>
 
         {/* Main content */}
-        <div style={{ flex: 1, background: "#f8f9fb", padding: "32px 40px", overflowY: "hidden", position: "relative" }}>
+        <div
+          style={{
+            flex: 1,
+            background: "#f8f9fb",
+            padding: "32px 40px",
+            overflowY: "hidden",
+            position: "relative",
+          }}
+        >
           {/* Top bar */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28 }}>
             <span style={{ fontSize: 26, fontWeight: 800, color: "#1e1b4b" }}>Configuración</span>
+
+            {/* "Probar Agente IA" button — reacts to cursor */}
             <div
               style={{
-                transform: `scale(${btnScale})`,
+                transform: `scale(${btnScale * pressProgress})`,
                 opacity: btnOpacity,
               }}
             >
@@ -166,7 +194,7 @@ export const ConfigScene: React.FC = () => {
                   padding: "12px 24px",
                   borderRadius: 10,
                   background: "#2de8b4",
-                  boxShadow: `0 0 ${20 * btnGlow}px rgba(45,232,180,0.7), 0 0 ${40 * btnGlow}px rgba(45,232,180,0.3)`,
+                  boxShadow: `0 0 ${(20 + btnHighlight * 20) * btnGlow}px rgba(45,232,180,${0.6 + btnHighlight * 0.3}), 0 0 ${(40 + btnHighlight * 30) * btnGlow}px rgba(45,232,180,0.25)`,
                   fontSize: 15,
                   fontWeight: 700,
                   color: "#0a0a1a",
@@ -178,12 +206,10 @@ export const ConfigScene: React.FC = () => {
             </div>
           </div>
 
-          {/* Subtitle */}
           <div style={{ fontSize: 16, color: "#555", marginBottom: 24 }}>
             Configura tu Agente IA según tus necesidades
           </div>
 
-          {/* Form fields */}
           <FormField
             label="Nombre del Agente IA"
             hint="Dale un nombre amigable a tu Agente IA. Solo para referencia interna."
@@ -204,6 +230,17 @@ export const ConfigScene: React.FC = () => {
           />
         </div>
       </div>
+
+      {/* Mouse cursor — enters from right-center, moves to "Probar" button and clicks */}
+      <MouseCursor
+        startX={1700}
+        startY={600}
+        enterDelay={30}
+        waypoints={[
+          { frame: 88, x: BTN_X, y: BTN_Y }, // move to button
+          { frame: 90, x: BTN_X, y: BTN_Y }, // click (ripple fires here)
+        ]}
+      />
     </AbsoluteFill>
   );
 };

@@ -8,6 +8,7 @@ import {
   Easing,
 } from "remotion";
 import { NubionRobotIcon } from "../NubionLogo";
+import { MouseCursor } from "../components/MouseCursor";
 
 // Animated chat message bubble
 const ChatBubble: React.FC<{
@@ -45,7 +46,7 @@ const ChatBubble: React.FC<{
   );
 };
 
-// Typing indicator (three dots)
+// Typing indicator
 const TypingIndicator: React.FC<{ delay: number }> = ({ delay }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -54,18 +55,11 @@ const TypingIndicator: React.FC<{ delay: number }> = ({ delay }) => {
   const opacity = interpolate(s, [0, 1], [0, 1]);
   const y = interpolate(s, [0, 1], [12, 0]);
 
-  const dot1 = interpolate((frame - delay) % 30, [0, 10, 20, 30], [0.3, 1, 0.3, 0.3], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const dot2 = interpolate((frame - delay) % 30, [5, 15, 25, 30], [0.3, 1, 0.3, 0.3], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const dot3 = interpolate((frame - delay) % 30, [10, 20, 30, 35], [0.3, 1, 0.3, 0.3], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  const makeDot = (offset: number) =>
+    interpolate((frame - delay) % 36, [offset, offset + 12, offset + 24, 36], [0.3, 1, 0.3, 0.3], {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    });
 
   return (
     <div
@@ -82,7 +76,7 @@ const TypingIndicator: React.FC<{ delay: number }> = ({ delay }) => {
         boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
       }}
     >
-      {[dot1, dot2, dot3].map((d, i) => (
+      {[0, 6, 12].map((offset, i) => (
         <div
           key={i}
           style={{
@@ -90,7 +84,7 @@ const TypingIndicator: React.FC<{ delay: number }> = ({ delay }) => {
             height: 8,
             borderRadius: "50%",
             background: "#6366f1",
-            opacity: d,
+            opacity: makeDot(offset),
           }}
         />
       ))}
@@ -102,29 +96,41 @@ export const TestingScene: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Blurred background fades in
-  const bgOpacity = interpolate(frame, [0, 15], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.out(Easing.quad),
-  });
-
-  // Modal slides up and fades in
+  // Modal slides up
   const modalSpring = spring({ frame: frame - 5, fps, config: { damping: 75, stiffness: 90 } });
   const modalY = interpolate(modalSpring, [0, 1], [80, 0]);
   const modalOpacity = interpolate(modalSpring, [0, 1], [0, 1]);
   const modalScale = interpolate(modalSpring, [0, 0.7, 1], [0.93, 1.02, 1]);
 
-  // Label "Probando el agente en tiempo real" fades in
+  // "Probando" label
   const labelOpacity = interpolate(frame, [8, 25], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.out(Easing.quad),
   });
 
-  // Show typing indicator between message 2 and message 3
-  const showTyping = frame > 85 && frame < 130;
-  const showBotReply = frame > 128;
+  // Input field gets a focus highlight when cursor is nearby (frame 55+)
+  const inputFocus = interpolate(frame, [55, 72], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  // Timeline:
+  // frame 20 — bot greeting appears
+  // frame 65 — user message appears (after cursor "types")
+  // frame 75 — cursor moves to send, clicks
+  // frame 85 — typing indicator
+  // frame 118 — bot full reply
+  const showTyping = frame > 85 && frame < 118;
+  const showBotReply = frame >= 118;
+
+  // Modal is centered: roughly x=700 left edge, width=520 → center x=960
+  // Input field bottom: modal height ~540, bottom padding ~80, so input y ≈ 540+270-80 = ~730
+  // Input field center y ≈ 850 in 1080 space (modal top ≈ 270)
+  const MODAL_CENTER_X = 960;
+  const INPUT_Y = 858;
+  const SEND_BTN_X = MODAL_CENTER_X + 210; // right of input
+  const SEND_BTN_Y = INPUT_Y;
 
   return (
     <AbsoluteFill
@@ -147,7 +153,7 @@ export const TestingScene: React.FC = () => {
         }}
       />
 
-      {/* Ambient glow behind modal */}
+      {/* Ambient glow */}
       <div
         style={{
           position: "absolute",
@@ -158,7 +164,6 @@ export const TestingScene: React.FC = () => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          opacity: bgOpacity,
         }}
       />
 
@@ -166,16 +171,17 @@ export const TestingScene: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: 60,
+          top: 52,
           left: "50%",
           transform: "translateX(-50%)",
           opacity: labelOpacity,
           zIndex: 2,
+          whiteSpace: "nowrap",
         }}
       >
         <span
           style={{
-            fontSize: 18,
+            fontSize: 17,
             fontWeight: 600,
             color: "#2de8b4",
             letterSpacing: 3,
@@ -199,7 +205,7 @@ export const TestingScene: React.FC = () => {
           background: "#f0f2f8",
         }}
       >
-        {/* Modal header bar */}
+        {/* Header */}
         <div
           style={{
             background: "#4a6fe8",
@@ -210,7 +216,6 @@ export const TestingScene: React.FC = () => {
             gap: 10,
           }}
         >
-          {/* Bot avatar */}
           <div
             style={{
               width: 64,
@@ -233,40 +238,25 @@ export const TestingScene: React.FC = () => {
           </div>
         </div>
 
-        {/* Chat messages area */}
+        {/* Messages */}
         <div
           style={{
             padding: "24px 20px",
             display: "flex",
             flexDirection: "column",
             gap: 14,
-            minHeight: 280,
+            minHeight: 260,
             background: "#f0f2f8",
           }}
         >
-          {/* Bot greeting */}
-          <ChatBubble
-            text="¡Hola! ¿En qué puedo ayudarte?"
-            fromUser={false}
-            delay={20}
-          />
-
-          {/* User question */}
-          <ChatBubble
-            text="¿Qué servicios ofrecéis?"
-            fromUser
-            delay={60}
-          />
-
-          {/* Typing indicator */}
+          <ChatBubble text="¡Hola! ¿En qué puedo ayudarte?" fromUser={false} delay={20} />
+          <ChatBubble text="¿Qué servicios ofrecéis?" fromUser delay={65} />
           {showTyping && <TypingIndicator delay={85} />}
-
-          {/* Bot full response */}
           {showBotReply && (
             <ChatBubble
-              text="Ofrecemos servicios de información sanitaria general y orientación para nuestros pacientes. ¿En qué más te puedo ayudar?"
+              text="Ofrecemos información sanitaria general y orientación para nuestros pacientes. ¿En qué más puedo ayudarte?"
               fromUser={false}
-              delay={128}
+              delay={118}
             />
           )}
         </div>
@@ -286,11 +276,12 @@ export const TestingScene: React.FC = () => {
             style={{
               flex: 1,
               background: "#f4f5f9",
-              border: "1.5px solid #6366f1",
+              border: `1.5px solid ${interpolate(inputFocus, [0, 1], [0, 1]) > 0.5 ? "#6366f1" : "#d0d0e0"}`,
               borderRadius: 12,
               padding: "12px 16px",
               fontSize: 15,
               color: "#aaa",
+              boxShadow: inputFocus > 0.5 ? "0 0 0 3px rgba(99,102,241,0.15)" : "none",
             }}
           >
             Consúltame tus dudas..
@@ -313,6 +304,19 @@ export const TestingScene: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Mouse cursor — clicks on input field area, then moves to send button */}
+      <MouseCursor
+        startX={MODAL_CENTER_X - 180}
+        startY={750}
+        enterDelay={48}
+        waypoints={[
+          { frame: 62, x: MODAL_CENTER_X - 60, y: INPUT_Y }, // hover input
+          { frame: 75, x: SEND_BTN_X, y: SEND_BTN_Y },       // move to send
+          { frame: 77, x: SEND_BTN_X, y: SEND_BTN_Y },       // click send
+          { frame: 140, x: MODAL_CENTER_X - 60, y: INPUT_Y + 10 }, // drift back
+        ]}
+      />
     </AbsoluteFill>
   );
 };
