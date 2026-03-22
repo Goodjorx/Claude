@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     title: "Jordi Segura — AI & Tech",
     description:
       "CEO & Co-founder de CenteIA Education. Formando a más de 300.000 personas en IA.",
-    url: "https://jordisegurapons.com",
+    url: "https://jordisegura.com",
     siteName: "Jordi Segura",
     locale: "es_ES",
     type: "website",
