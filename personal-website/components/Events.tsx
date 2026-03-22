@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const events = [
   {
     title: "La IA y el Empleo",
@@ -36,19 +38,43 @@ export default function Events() {
       className="py-24 md:py-40 px-6 md:px-12 border-t border-[#1a1a1a]"
     >
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-6">
-          <div className="w-8 h-px bg-[#e8510a]" />
-          <span className="text-xs text-[#e8510a] tracking-[0.3em] uppercase font-semibold">
-            Conferencias y Eventos
-          </span>
+        {/* Full-width conference photo */}
+        <div className="relative w-full aspect-[21/9] mb-20 overflow-hidden bg-[#0f0f0f]">
+          <Image
+            src="/images/jordi-conference.jpg"
+            alt="Jordi Segura en conferencia CenteIA"
+            fill
+            className="object-cover object-top"
+            quality={85}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to right, rgba(8,8,8,0.8) 0%, transparent 60%), linear-gradient(to top, rgba(8,8,8,0.6) 0%, transparent 50%)",
+            }}
+          />
+          <div className="absolute bottom-8 left-8 md:left-12">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-8 h-px bg-[#e8510a]" />
+              <span className="text-xs text-[#e8510a] tracking-[0.3em] uppercase font-semibold">
+                Conferencias y Eventos
+              </span>
+            </div>
+            <h2 className="text-headline text-white">
+              Mi misión: llevar la IA
+              <br />
+              <span className="text-white/50">al máximo de personas.</span>
+            </h2>
+          </div>
         </div>
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16">
-          <h2 className="text-headline text-white">
-            Mi misión: llevar la IA
-            <br />
-            <span className="text-[#444]">al máximo de personas.</span>
-          </h2>
+
+        {/* CTA row */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-16">
+          <p className="text-[#666] max-w-lg">
+            Aterrizo conceptos técnicos complejos de manera sencilla y
+            entretenida. Práctico, directo y adaptado a tu audiencia.
+          </p>
           <a
             href="#contacto"
             className="shrink-0 inline-flex items-center gap-3 px-8 py-4 bg-[#e8510a] text-white font-bold hover:bg-[#ff6a24] transition-colors text-sm tracking-wide"
@@ -59,7 +85,7 @@ export default function Events() {
 
         {/* Events grid */}
         <div className="grid md:grid-cols-2 gap-px bg-[#1a1a1a]">
-          {events.map((event, i) => (
+          {events.map((event) => (
             <div
               key={event.title}
               className={`p-8 md:p-10 group cursor-default transition-colors duration-300 ${
@@ -104,22 +130,26 @@ export default function Events() {
           ))}
         </div>
 
-        {/* Past logos / mentions */}
+        {/* Past logos */}
         <div className="mt-16 pt-12 border-t border-[#1a1a1a]">
           <p className="text-xs text-[#444] tracking-[0.3em] uppercase mb-8 text-center">
             Han contado conmigo
           </p>
           <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
-            {["La Caixa", "Learning Heroes", "MasterChef World", "CenteIA PRO", "Prompt Congress"].map(
-              (name) => (
-                <span
-                  key={name}
-                  className="text-[#333] text-sm font-semibold tracking-wider uppercase hover:text-[#666] transition-colors"
-                >
-                  {name}
-                </span>
-              )
-            )}
+            {[
+              "La Caixa",
+              "Expo Real Estate México",
+              "5° Congreso Inversiones Inmobiliarias",
+              "MasterChef World",
+              "Prompt Congress",
+            ].map((name) => (
+              <span
+                key={name}
+                className="text-[#333] text-sm font-semibold tracking-wider uppercase hover:text-[#666] transition-colors"
+              >
+                {name}
+              </span>
+            ))}
           </div>
         </div>
       </div>
