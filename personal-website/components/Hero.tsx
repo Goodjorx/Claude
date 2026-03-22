@@ -1,112 +1,79 @@
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-6">
-      {/* Background glow blobs */}
+    <section className="relative min-h-screen flex flex-col justify-end pb-16 px-6 md:px-12 overflow-hidden">
+      {/* Background texture */}
       <div
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full animate-pulse-slow"
+        className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%)",
-          filter: "blur(40px)",
-        }}
-      />
-      <div
-        className="absolute top-1/3 left-1/4 w-[400px] h-[400px] rounded-full animate-pulse-slow delay-300"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(168,85,247,0.08) 0%, transparent 70%)",
-          filter: "blur(40px)",
+            "radial-gradient(ellipse 80% 60% at 50% 100%, rgba(232,81,10,0.06) 0%, transparent 70%)",
         }}
       />
 
-      {/* Grid pattern */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
-        }}
-      />
+      {/* Horizontal rule top */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-[#1a1a1a]" />
 
-      <div className="relative z-10 max-w-4xl mx-auto text-center">
-        {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/5 text-indigo-400 text-sm mb-8 animate-fade-in">
-          <span className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" />
-          CEO & Co-founder · CenteIA Education
+      {/* Main content — bottom aligned */}
+      <div className="relative z-10 max-w-7xl mx-auto w-full">
+        {/* Pre-headline */}
+        <div className="animate-slide-left mb-8">
+          <span className="text-xs text-[#e8510a] tracking-[0.3em] uppercase font-semibold">
+            Ingeniero · Speaker · Emprendedor
+          </span>
         </div>
 
-        {/* Headline */}
-        <h1
-          className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6 animate-fade-in-up"
-          style={{ opacity: 0 }}
-        >
-          Jordi Segura
-          <br />
-          <span className="gradient-text">Pons</span>
+        {/* Display headline */}
+        <h1 className="text-display text-white mb-8 animate-fade-in-up max-w-5xl">
+          <span className="block">Descubre cómo</span>
+          <span className="block text-[#e8510a]">la IA transforma</span>
+          <span className="block">tu futuro.</span>
         </h1>
 
-        {/* Subtitle */}
-        <p
-          className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up delay-200"
-          style={{ opacity: 0 }}
-        >
-          Ingeniero de telecomunicaciones · Máster en IA · He ayudado a{" "}
-          <span className="text-white font-medium">+300.000 personas</span> a
-          dominar la inteligencia artificial y transformar su carrera profesional.
-        </p>
-
-        {/* CTAs */}
-        <div
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up delay-300"
-          style={{ opacity: 0 }}
-        >
-          <a
-            href="#sobre-mi"
-            className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium transition-all duration-200 hover:shadow-[0_0_30px_rgba(99,102,241,0.4)]"
+        {/* Bottom row */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 pt-8 border-t border-[#1a1a1a]">
+          {/* Left: tagline */}
+          <p
+            className="text-[#888] text-lg max-w-xl leading-relaxed animate-fade-in-up delay-200"
           >
-            Conóceme
-          </a>
-          <a
-            href="#contacto"
-            className="w-full sm:w-auto px-8 py-3.5 rounded-full border border-gray-700 hover:border-gray-500 text-gray-300 hover:text-white font-medium transition-all duration-200"
-          >
-            Hablemos →
-          </a>
-        </div>
+            Llevo años haciendo que la inteligencia artificial sea accesible. He
+            formado a más de{" "}
+            <span className="text-white font-semibold">500.000 personas</span>{" "}
+            en 32 países. CEO & Co-founder de{" "}
+            <a
+              href="https://centeia.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#e8510a] hover:text-[#ff6a24] transition-colors"
+            >
+              CenteIA Education
+            </a>
+            .
+          </p>
 
-        {/* Social proof / stats */}
-        <div
-          className="mt-20 grid grid-cols-3 gap-8 max-w-lg mx-auto animate-fade-in delay-500"
-          style={{ opacity: 0 }}
-        >
-          {[
-            { value: "300K+", label: "Personas formadas" },
-            { value: "10K+", label: "Seguidores IG" },
-            { value: "5★", label: "Trustpilot" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="text-2xl font-bold text-white">{stat.value}</div>
-              <div className="text-xs text-gray-500 mt-1">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-600 animate-bounce">
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+          {/* Right: CTAs */}
+          <div
+            className="flex flex-row items-center gap-4 animate-fade-in-up delay-300 shrink-0"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.5}
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
+            <a
+              href="#sobre-mi"
+              className="px-8 py-4 bg-[#e8510a] text-white font-bold hover:bg-[#ff6a24] transition-colors duration-200 text-sm tracking-wide"
+            >
+              MI HISTORIA
+            </a>
+            <a
+              href="#servicios"
+              className="px-8 py-4 border border-[#333] text-[#888] hover:text-white hover:border-white transition-all duration-200 text-sm tracking-wide"
+            >
+              QUÉ OFREZCO
+            </a>
+          </div>
         </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-6 right-8 hidden md:flex items-center gap-3 text-[#444] text-xs tracking-widest uppercase">
+        <span>Scroll</span>
+        <div className="w-8 h-px bg-[#444]" />
       </div>
     </section>
   );
