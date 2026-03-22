@@ -2,29 +2,29 @@ export default function Contact() {
   return (
     <section
       id="contacto"
-      className="py-24 md:py-40 px-6 md:px-12 border-t border-[#1a1a1a]"
+      className="py-24 md:py-40 px-6 md:px-12 border-t border-white/6"
     >
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-16 md:gap-32 items-start">
           {/* Left */}
           <div>
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-8 h-px bg-[#e8510a]" />
-              <span className="text-xs text-[#e8510a] tracking-[0.3em] uppercase font-semibold">
+              <div className="w-8 h-px bg-white/20" />
+              <span className="text-xs text-white/35 tracking-[0.3em] uppercase font-medium">
                 Contacto
               </span>
             </div>
             <h2 className="text-headline text-white mb-8">
               ¿Hablamos?
             </h2>
-            <p className="text-[#666] leading-relaxed mb-10 text-lg">
+            <p className="text-white/40 leading-relaxed mb-10 text-lg">
               Si tienes una empresa que quiere adoptar IA, quieres un evento o
               conferencia, o simplemente compartimos intereses y quieres
               conectar — estoy aquí.
             </p>
 
             {/* Social links */}
-            <div className="space-y-4">
+            <div className="space-y-0">
               {[
                 {
                   label: "LinkedIn",
@@ -62,18 +62,18 @@ export default function Contact() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 py-4 border-b border-[#1a1a1a] group hover:border-[#333] transition-colors"
+                  className="flex items-center gap-4 py-4 border-b border-white/6 group hover:border-white/15 transition-colors"
                 >
-                  <div className="w-8 h-8 border border-[#222] flex items-center justify-center text-[#555] group-hover:border-[#e8510a] group-hover:text-[#e8510a] transition-colors">
+                  <div className="w-8 h-8 border border-white/8 flex items-center justify-center text-white/25 group-hover:border-white/30 group-hover:text-white transition-colors">
                     {social.icon}
                   </div>
                   <div>
-                    <div className="text-white font-semibold text-sm">
+                    <div className="text-white font-medium text-sm">
                       {social.label}
                     </div>
-                    <div className="text-[#555] text-xs">{social.handle}</div>
+                    <div className="text-white/25 text-xs">{social.handle}</div>
                   </div>
-                  <span className="ml-auto text-[#333] group-hover:text-[#e8510a] transition-colors">
+                  <span className="ml-auto text-white/15 group-hover:text-white/50 transition-colors">
                     →
                   </span>
                 </a>
@@ -82,12 +82,14 @@ export default function Contact() {
           </div>
 
           {/* Right: CTA box */}
-          <div className="border border-[#1a1a1a] p-10 md:p-14">
-            <div className="text-5xl font-black text-[#1a1a1a] mb-8">¿?</div>
-            <h3 className="text-2xl font-bold text-white mb-4">
+          <div className="border border-white/8 p-10 md:p-14">
+            <div className="text-5xl font-bold text-white/6 mb-8" >
+              ¿?
+            </div>
+            <h3 className="text-2xl font-bold text-white mb-4" >
               ¿Necesitas asesoramiento?
             </h3>
-            <p className="text-[#666] leading-relaxed mb-8">
+            <p className="text-white/40 leading-relaxed mb-8">
               No importa tu nivel de experiencia ni tu sector. Puedo guiarte en
               el mundo de la inteligencia artificial y garantizar el éxito de tu
               proyecto.
@@ -96,11 +98,11 @@ export default function Contact() {
               href="https://linkedin.com/in/jordisegurapons"
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full text-center px-8 py-4 bg-[#e8510a] text-white font-bold hover:bg-[#ff6a24] transition-colors text-sm tracking-wide"
+              className="block w-full text-center px-8 py-4 bg-white text-black font-bold hover:bg-white/90 transition-colors text-sm tracking-wider"
             >
               CONTÁCTAME EN LINKEDIN →
             </a>
-            <p className="text-[#444] text-xs mt-4 text-center">
+            <p className="text-white/20 text-xs mt-4 text-center">
               También en Instagram: @jordisegurap
             </p>
           </div>

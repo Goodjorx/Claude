@@ -29,8 +29,8 @@ export default function Services() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-20">
           <div>
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-8 h-px bg-[#e8510a]" />
-              <span className="text-xs text-[#e8510a] tracking-[0.3em] uppercase font-semibold">
+              <div className="w-8 h-px bg-white/20" />
+              <span className="text-xs text-white/35 tracking-[0.3em] uppercase font-semibold">
                 Qué ofrezco
               </span>
             </div>
@@ -60,13 +60,13 @@ export default function Services() {
               <div>
                 {/* Number */}
                 <div className="flex items-center justify-between mb-10">
-                  <span className="text-5xl font-black text-[#1a1a1a] group-hover:text-[#e8510a] transition-colors duration-500">
+                  <span className="text-5xl font-black text-[#1a1a1a] group-hover:text-white transition-colors duration-500">
                     {service.number}
                   </span>
                   <div
                     className={`w-10 h-10 flex items-center justify-center border ${
                       service.highlight
-                        ? "border-[#e8510a] text-[#e8510a]"
+                        ? "border-white/20 text-white"
                         : "border-[#333] text-[#555]"
                     }`}
                   >
@@ -99,7 +99,7 @@ export default function Services() {
                 href={service.ctaHref}
                 className={`inline-flex items-center gap-3 mt-10 text-sm font-semibold tracking-wide transition-colors ${
                   service.highlight
-                    ? "text-[#e8510a] hover:text-[#ff6a24]"
+                    ? "text-white hover:text-white/70"
                     : "text-[#666] hover:text-white"
                 }`}
               >

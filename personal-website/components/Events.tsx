@@ -56,8 +56,8 @@ export default function Events() {
           />
           <div className="absolute bottom-8 left-8 md:left-12">
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-8 h-px bg-[#e8510a]" />
-              <span className="text-xs text-[#e8510a] tracking-[0.3em] uppercase font-semibold">
+              <div className="w-8 h-px bg-white/20" />
+              <span className="text-xs text-white/35 tracking-[0.3em] uppercase font-semibold">
                 Conferencias y Eventos
               </span>
             </div>
@@ -77,7 +77,7 @@ export default function Events() {
           </p>
           <a
             href="#contacto"
-            className="shrink-0 inline-flex items-center gap-3 px-8 py-4 bg-[#e8510a] text-white font-bold hover:bg-[#ff6a24] transition-colors text-sm tracking-wide"
+            className="shrink-0 inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-bold hover:bg-white/90 transition-colors text-sm tracking-wide"
           >
             ¿QUIERES UN EVENTO SOBRE IA?
           </a>
@@ -102,14 +102,14 @@ export default function Events() {
                     <span
                       className={`text-xs px-2 py-1 font-semibold uppercase tracking-widest ${
                         event.featured
-                          ? "bg-[#e8510a] text-white"
+                          ? "bg-white text-white"
                           : "border border-[#333] text-[#555]"
                       }`}
                     >
                       {event.category}
                     </span>
                     {event.featured && (
-                      <span className="text-xs text-[#e8510a] tracking-wide">
+                      <span className="text-xs text-white/35 tracking-wide">
                         ★ Más solicitada
                       </span>
                     )}
