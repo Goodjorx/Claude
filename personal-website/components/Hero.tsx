@@ -27,15 +27,15 @@ export default function Hero() {
       {/* Thin top rule */}
       <div className="absolute top-0 left-0 right-0 h-px bg-white/8" />
 
+      {/* Pre-label — pinned just below nav, never overlaps */}
+      <div className="absolute top-[72px] left-6 md:left-12 z-10 animate-slide-left">
+        <span className="text-xs text-white/55 tracking-[0.35em] uppercase font-medium">
+          Ingeniero · Speaker · CEO de CenteIA Education
+        </span>
+      </div>
+
       {/* ── Main content — pinned to bottom ─────────────────────────────── */}
       <div className="relative z-10 max-w-7xl mx-auto w-full">
-
-        {/* Pre-label */}
-        <div className="animate-slide-left mb-10">
-          <span className="text-xs text-white/55 tracking-[0.35em] uppercase font-medium">
-            Ingeniero · Speaker · CEO de CenteIA Education
-          </span>
-        </div>
 
         {/* Display headline — line-by-line clip reveal */}
         <h1 className="text-display text-white mb-10 max-w-5xl">

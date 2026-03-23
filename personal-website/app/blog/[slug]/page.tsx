@@ -3,6 +3,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
@@ -61,8 +62,13 @@ export default async function PostPage({ params }: Props) {
           </p>
 
           <div className="flex items-center gap-4 pt-6 border-t border-[#1a1a1a]">
-            <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-white text-xs font-black">
-              JS
+            <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0">
+              <Image
+                src="/images/jordi-studio.jpg"
+                alt="Jordi Segura Pons"
+                fill
+                className="object-cover object-top"
+              />
             </div>
             <div>
               <div className="text-white text-sm font-semibold">
