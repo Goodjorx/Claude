@@ -46,7 +46,7 @@ export default function Events() {
     >
       <div className="max-w-7xl mx-auto">
         {/* Full-width conference photo */}
-        <div className="relative w-full aspect-[21/9] mb-20 overflow-hidden bg-[#0f0f0f]">
+        <div className="relative w-full aspect-[4/3] sm:aspect-[16/7] md:aspect-[21/9] mb-20 overflow-hidden bg-[#0f0f0f]">
           <Image
             src="/images/foto atril womenalia.jpeg"
             alt="Jordi Segura dando conferencia"
@@ -61,7 +61,7 @@ export default function Events() {
                 "linear-gradient(to right, rgba(8,8,8,0.8) 0%, transparent 60%), linear-gradient(to top, rgba(8,8,8,0.6) 0%, transparent 50%)",
             }}
           />
-          <div className="absolute bottom-8 left-8 md:left-12">
+          <div className="absolute bottom-8 left-8 md:left-12 max-w-[calc(100%-4rem)]">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-8 h-px bg-white/20" />
               <span className="text-xs text-white/55 tracking-[0.3em] uppercase font-semibold">

@@ -12,12 +12,12 @@ export default function Stats() {
           {stats.map((stat, i) => (
             <div
               key={stat.label}
-              className={`py-8 px-6 md:px-10 ${
+              className={`py-6 px-3 sm:px-6 md:px-10 ${
                 i < stats.length - 1 ? "border-r border-[#1a1a1a]" : ""
               }`}
             >
               <div
-                className="text-4xl md:text-5xl font-black text-white mb-2 animate-fade-in-up"
+                className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 animate-fade-in-up"
                 style={{ animationDelay: `${i * 0.1}s` }}
               >
                 {stat.value}
