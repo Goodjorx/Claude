@@ -1,0 +1,8 @@
+Here goes images
+
+ube estas 4 imágenes a public/images/ en el repo:
+
+jordi-stage.jpg — hero de fondo
+jordi-panel.jpg — foto principal en "Sobre mí"
+jordi-studio.jpg — foto secundaria en "Sobre mí"
+jordi-conference.jpg — imagen en Eventos
