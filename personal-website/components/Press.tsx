@@ -151,7 +151,7 @@ export default function Press() {
         {/* Section label */}
         <div className="flex items-center gap-4 mb-16">
           <div className="w-8 h-px bg-white/20" />
-          <span className="text-xs text-white/35 tracking-[0.3em] uppercase font-medium">
+          <span className="text-xs text-white/55 tracking-[0.3em] uppercase font-medium">
             En los medios
           </span>
         </div>
@@ -162,7 +162,7 @@ export default function Press() {
             <h2 className="text-headline text-white mb-8">
               Prensa &amp;
               <br />
-              <span className="text-white/30">apariciones.</span>
+              <span className="text-white/50">apariciones.</span>
             </h2>
 
             {/* Forbes portrait photo */}
@@ -175,7 +175,7 @@ export default function Press() {
                 quality={90}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#080808]/50 to-transparent" />
-              <div className="absolute bottom-4 left-4 text-xs text-white/40 tracking-widest uppercase">
+              <div className="absolute bottom-4 left-4 text-xs text-white/55 tracking-widest uppercase">
                 Forbes AI Forward Summit · 2025
               </div>
             </div>
@@ -196,16 +196,16 @@ export default function Press() {
                     <span className="text-xs font-bold text-white tracking-wide uppercase">
                       {item.publication}
                     </span>
-                    <span className="text-xs text-white/20 uppercase tracking-wide">
+                    <span className="text-xs text-white/35 uppercase tracking-wide">
                       {item.type}
                     </span>
                   </div>
-                  <span className="text-xs text-white/25 shrink-0">{item.date}</span>
+                  <span className="text-xs text-white/40 shrink-0">{item.date}</span>
                 </div>
-                <p className="text-white/55 text-sm leading-relaxed group-hover:text-white/80 transition-colors">
+                <p className="text-white/70 text-sm leading-relaxed group-hover:text-white/90 transition-colors">
                   {item.headline}
                 </p>
-                <span className="inline-block mt-3 text-xs text-white/20 group-hover:text-white/50 transition-colors">
+                <span className="inline-block mt-3 text-xs text-white/35 group-hover:text-white/60 transition-colors">
                   Leer artículo →
                 </span>
               </a>
@@ -223,21 +223,21 @@ export default function Press() {
             quality={85}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#080808]/60 to-transparent" />
-          <div className="absolute bottom-6 left-8 text-xs text-white/40 tracking-widest uppercase">
+          <div className="absolute bottom-6 left-8 text-xs text-white/55 tracking-widest uppercase">
             En conferencia
           </div>
         </div>
 
         {/* Media logos bar */}
         <div className="border-t border-white/6 pt-12 mb-12">
-          <p className="text-xs text-white/40 tracking-[0.3em] uppercase mb-8">
+          <p className="text-xs text-white/55 tracking-[0.3em] uppercase mb-8">
             También en
           </p>
           <div className="flex flex-wrap gap-x-8 gap-y-4 items-center">
             {mediaLogos.map((name) => (
               <span
                 key={name}
-                className="text-white/35 text-sm font-semibold tracking-wide uppercase hover:text-white/60 transition-colors"
+                className="text-white/55 text-sm font-semibold tracking-wide uppercase hover:text-white/75 transition-colors"
               >
                 {name}
               </span>
@@ -247,7 +247,7 @@ export default function Press() {
 
         {/* Full press list */}
         <div className="border-t border-white/6 pt-12">
-          <p className="text-xs text-white/40 tracking-[0.3em] uppercase mb-8">
+          <p className="text-xs text-white/55 tracking-[0.3em] uppercase mb-8">
             Todas las apariciones — {allPress.length} artículos
           </p>
           <div className="space-y-0">
@@ -259,16 +259,16 @@ export default function Press() {
                 rel="noopener noreferrer"
                 className="group flex items-start gap-6 py-4 border-b border-white/5 hover:border-white/12 transition-colors"
               >
-                <span className="text-xs text-white/20 shrink-0 w-20 pt-0.5">
+                <span className="text-xs text-white/35 shrink-0 w-20 pt-0.5">
                   {item.date}
                 </span>
-                <span className="text-xs font-bold text-white/50 shrink-0 w-28 pt-0.5 uppercase tracking-wide group-hover:text-white/70 transition-colors">
+                <span className="text-xs font-bold text-white/65 shrink-0 w-28 pt-0.5 uppercase tracking-wide group-hover:text-white/85 transition-colors">
                   {item.publication}
                 </span>
-                <span className="text-sm text-white/35 group-hover:text-white/60 transition-colors flex-1 leading-relaxed">
+                <span className="text-sm text-white/55 group-hover:text-white/80 transition-colors flex-1 leading-relaxed">
                   {item.headline}
                 </span>
-                <span className="text-white/15 group-hover:text-white/40 transition-colors shrink-0 pt-0.5">
+                <span className="text-white/30 group-hover:text-white/55 transition-colors shrink-0 pt-0.5">
                   →
                 </span>
               </a>

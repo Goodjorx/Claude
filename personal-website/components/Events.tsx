@@ -57,21 +57,21 @@ export default function Events() {
           <div className="absolute bottom-8 left-8 md:left-12">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-8 h-px bg-white/20" />
-              <span className="text-xs text-white/35 tracking-[0.3em] uppercase font-semibold">
+              <span className="text-xs text-white/55 tracking-[0.3em] uppercase font-semibold">
                 Conferencias y Eventos
               </span>
             </div>
             <h2 className="text-headline text-white">
               Mi misión: llevar la IA
               <br />
-              <span className="text-white/50">al máximo de personas.</span>
+              <span className="text-white/65">al máximo de personas.</span>
             </h2>
           </div>
         </div>
 
         {/* CTA row */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-16">
-          <p className="text-[#666] max-w-lg">
+          <p className="text-[#888] max-w-lg">
             Aterrizo conceptos técnicos complejos de manera sencilla y
             entretenida. Práctico, directo y adaptado a tu audiencia.
           </p>
@@ -103,7 +103,7 @@ export default function Events() {
                       className={`text-xs px-2 py-1 font-semibold uppercase tracking-widest ${
                         event.featured
                           ? "bg-white text-white"
-                          : "border border-[#333] text-[#555]"
+                          : "border border-[#333] text-[#777]"
                       }`}
                     >
                       {event.category}
@@ -121,7 +121,7 @@ export default function Events() {
                   </h3>
                 </div>
                 <p
-                  className={`text-[#666] leading-relaxed ${event.featured ? "md:flex-1" : ""}`}
+                  className={`text-[#888] leading-relaxed ${event.featured ? "md:flex-1" : ""}`}
                 >
                   {event.description}
                 </p>
@@ -132,7 +132,7 @@ export default function Events() {
 
         {/* Past logos */}
         <div className="mt-16 pt-12 border-t border-[#1a1a1a]">
-          <p className="text-xs text-[#444] tracking-[0.3em] uppercase mb-8 text-center">
+          <p className="text-xs text-[#666] tracking-[0.3em] uppercase mb-8 text-center">
             Han contado conmigo
           </p>
           <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
@@ -145,7 +145,7 @@ export default function Events() {
             ].map((name) => (
               <span
                 key={name}
-                className="text-[#333] text-sm font-semibold tracking-wider uppercase hover:text-[#666] transition-colors"
+                className="text-[#555] text-sm font-semibold tracking-wider uppercase hover:text-[#888] transition-colors"
               >
                 {name}
               </span>

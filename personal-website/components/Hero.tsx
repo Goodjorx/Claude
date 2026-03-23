@@ -32,8 +32,8 @@ export default function Hero() {
 
         {/* Pre-label */}
         <div className="animate-slide-left mb-10">
-          <span className="text-xs text-white/35 tracking-[0.35em] uppercase font-medium">
-            Ingeniero · Speaker · Emprendedor
+          <span className="text-xs text-white/55 tracking-[0.35em] uppercase font-medium">
+            Data Scientist · Speaker · CEO de CenteIA Education
           </span>
         </div>
 
@@ -43,7 +43,7 @@ export default function Hero() {
             <span style={{ animationDelay: "0.08s" }}>Descubre cómo</span>
           </span>
           <span className="reveal-line">
-            <span style={{ animationDelay: "0.22s" }} className="text-white/35">
+            <span style={{ animationDelay: "0.22s" }} className="text-white/55">
               la IA transforma
             </span>
           </span>
@@ -54,7 +54,7 @@ export default function Hero() {
 
         {/* Bottom row: tagline + CTAs */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 pt-8 border-t border-white/8">
-          <p className="text-white/40 text-lg max-w-xl leading-relaxed animate-fade-in-up delay-500">
+          <p className="text-white/60 text-lg max-w-xl leading-relaxed animate-fade-in-up delay-500">
             Llevo años haciendo que la inteligencia artificial sea accesible. He
             formado a más de{" "}
             <span className="text-white font-semibold">500.000 personas</span>{" "}
@@ -79,7 +79,7 @@ export default function Hero() {
             </a>
             <a
               href="#servicios"
-              className="px-8 py-4 border border-white/20 text-white/50 hover:text-white hover:border-white/45 transition-all duration-200 text-sm tracking-wider"
+              className="px-8 py-4 border border-white/20 text-white/65 hover:text-white hover:border-white/45 transition-all duration-200 text-sm tracking-wider"
             >
               QUÉ OFREZCO
             </a>

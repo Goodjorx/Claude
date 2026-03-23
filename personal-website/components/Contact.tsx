@@ -25,7 +25,7 @@ export default function Contact() {
               </span>
             </div>
             <h2 className="text-headline text-white mb-8">¿Hablamos?</h2>
-            <p className="text-white/55 leading-relaxed mb-10 text-lg">
+            <p className="text-white/70 leading-relaxed mb-10 text-lg">
               Si tienes una empresa que quiere adoptar IA, quieres un evento o
               conferencia, o simplemente quieres conectar — escríbeme.
             </p>
@@ -90,7 +90,7 @@ export default function Contact() {
                     <div className="text-white font-medium text-sm">
                       {social.label}
                     </div>
-                    <div className="text-white/35 text-xs">{social.handle}</div>
+                    <div className="text-white/55 text-xs">{social.handle}</div>
                   </div>
                   <span className="ml-auto text-white/20 group-hover:text-white/60 transition-colors">
                     →
@@ -199,7 +199,7 @@ export default function Contact() {
                 ENVIAR MENSAJE →
               </button>
 
-              <p className="text-white/25 text-xs text-center">
+              <p className="text-white/45 text-xs text-center">
                 Respondo en menos de 48h · jordi@centeia.com
               </p>
             </form>
