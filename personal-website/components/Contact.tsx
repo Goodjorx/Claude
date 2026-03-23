@@ -103,7 +103,7 @@ export default function Contact() {
           {/* Right: contact form */}
           <div>
             <form
-              action="https://formsubmit.co/jordi@centeia.com"
+              action="https://formsubmit.co/infojordi@centeia.com"
               method="POST"
               className="space-y-5"
             >
@@ -200,7 +200,7 @@ export default function Contact() {
               </button>
 
               <p className="text-white/45 text-xs text-center">
-                Respondo en menos de 48h · jordi@centeia.com
+                Respondo en menos de 48h · infojordi@centeia.com
               </p>
             </form>
           </div>

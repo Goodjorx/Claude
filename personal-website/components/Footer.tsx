@@ -10,9 +10,9 @@ export default function Footer() {
           <span className="text-white/55 text-sm">© {year} Jordi Segura Pons</span>
         </div>
         <div className="flex items-center gap-6 text-white/55 text-sm">
-          <a href="#sobre-mi" className="hover:text-white/50 transition-colors">Sobre mí</a>
-          <a href="#servicios" className="hover:text-white/50 transition-colors">Servicios</a>
-          <a href="#eventos" className="hover:text-white/50 transition-colors">Eventos</a>
+          <a href="/#sobre-mi" className="hover:text-white/50 transition-colors">Sobre mí</a>
+          <a href="/#servicios" className="hover:text-white/50 transition-colors">Servicios</a>
+          <a href="/#eventos" className="hover:text-white/50 transition-colors">Eventos</a>
           <a
             href="https://centeia.com"
             target="_blank"
