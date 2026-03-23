@@ -88,11 +88,11 @@ export default function About() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#080808]/50 to-transparent" />
             </div>
 
-            {/* Forbes portrait */}
+            {/* Speaking — Forbes panel */}
             <div className="relative aspect-[16/9] overflow-hidden bg-[#0d0d0d]">
               <Image
-                src="/images/jordi-forbes.jpg"
-                alt="Jordi Segura en Forbes AI Forward Summit"
+                src="/images/jordi-panel.jpg"
+                alt="Jordi Segura en panel de expertos"
                 fill
                 className="object-cover object-center"
                 quality={85}

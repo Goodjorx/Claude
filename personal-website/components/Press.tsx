@@ -216,28 +216,28 @@ export default function Press() {
         {/* Panel photo — full width */}
         <div className="relative aspect-[16/6] overflow-hidden bg-[#0d0d0d] border border-white/5 mb-20">
           <Image
-            src="/images/jordi-panel.jpg"
-            alt="Jordi Segura en panel de expertos"
+            src="/images/jordi-conference.jpg"
+            alt="Jordi Segura en conferencia"
             fill
-            className="object-cover object-center"
+            className="object-cover object-top"
             quality={85}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#080808]/60 to-transparent" />
           <div className="absolute bottom-6 left-8 text-xs text-white/40 tracking-widest uppercase">
-            Panel de expertos · Forbes AI Forward Summit
+            En conferencia
           </div>
         </div>
 
         {/* Media logos bar */}
         <div className="border-t border-white/6 pt-12 mb-12">
-          <p className="text-xs text-white/20 tracking-[0.3em] uppercase mb-8">
+          <p className="text-xs text-white/40 tracking-[0.3em] uppercase mb-8">
             También en
           </p>
           <div className="flex flex-wrap gap-x-8 gap-y-4 items-center">
             {mediaLogos.map((name) => (
               <span
                 key={name}
-                className="text-white/20 text-sm font-semibold tracking-wide uppercase hover:text-white/45 transition-colors"
+                className="text-white/35 text-sm font-semibold tracking-wide uppercase hover:text-white/60 transition-colors"
               >
                 {name}
               </span>
@@ -247,7 +247,7 @@ export default function Press() {
 
         {/* Full press list */}
         <div className="border-t border-white/6 pt-12">
-          <p className="text-xs text-white/20 tracking-[0.3em] uppercase mb-8">
+          <p className="text-xs text-white/40 tracking-[0.3em] uppercase mb-8">
             Todas las apariciones — {allPress.length} artículos
           </p>
           <div className="space-y-0">

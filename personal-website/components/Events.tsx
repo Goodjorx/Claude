@@ -41,8 +41,8 @@ export default function Events() {
         {/* Full-width conference photo */}
         <div className="relative w-full aspect-[21/9] mb-20 overflow-hidden bg-[#0f0f0f]">
           <Image
-            src="/images/jordi-conference.jpg"
-            alt="Jordi Segura en conferencia CenteIA"
+            src="/images/foto atril womenalia.jpeg"
+            alt="Jordi Segura dando conferencia"
             fill
             className="object-cover object-top"
             quality={85}
