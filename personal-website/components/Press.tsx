@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 // ─── Datos de prensa ─────────────────────────────────────────────────────────
-// TODO: reemplaza los url: "#" con los enlaces reales de cada artículo
+// Pendientes (paywall / no indexados): Forbes ×4, Mundo Deportivo, El Confidencial, La Vanguardia
 
 const featured = [
   {
@@ -11,7 +11,7 @@ const featured = [
     headline:
       "La centella jovencísima de la IA que no teme al futuro laboral",
     type: "Entrevista",
-    url: "#",
+    url: "https://www.elmundo.es/economia/empresas/2025/10/13/68e539b5e9cf4a7e748b45a3.html",
   },
   {
     publication: "Forbes",
@@ -19,7 +19,7 @@ const featured = [
     date: "Nov 2025",
     headline: "The 50 Dreams List and the man behind it",
     type: "Feature",
-    url: "#",
+    url: "#", // behind paywall — add URL manually
   },
   {
     publication: "La Vanguardia",
@@ -28,7 +28,7 @@ const featured = [
     headline:
       "La startup de formación en inteligencia artificial factura seis millones de euros",
     type: "Corporativo",
-    url: "#",
+    url: "#", // add URL manually
   },
 ];
 
@@ -38,68 +38,86 @@ const allPress = [
     date: "Mar 2026",
     headline:
       'Jordi Segura, experto en IA: "Uno de los métodos que mejor nos sirven es el método ROCE"',
-    url: "#",
+    url: "#", // add URL manually
   },
   {
     publication: "The New Barcelona Post",
     date: "Feb 2026",
     headline:
       "CenteIA, la academia que acerca la inteligencia artificial a todo el mundo",
-    url: "#",
+    url: "https://www.thenewbarcelonapost.com/centeia-academia-inteligencia-artificial-curos-gratuito/",
   },
   {
     publication: "Emprendedores",
     date: "Feb 2026",
     headline: "CenteIA Education: de 1.000€ a 6M en un año",
-    url: "#",
+    url: "https://emprendedores.es/ideas-de-negocio/centeia-formacion-ia/",
   },
   {
     publication: "El Economista",
     date: "Dic 2025",
     headline:
       "CenteIA espera facturar 10 millones en 2026 y ampliar su catálogo de formaciones",
-    url: "#",
+    url: "https://www.eleconomista.es/tecnologia/noticias/13694221/12/25/centeia-espera-facturar-10-millones-en-2026-y-ampliar-su-catalogo-de-formaciones.html",
+  },
+  {
+    publication: "El Economista",
+    date: "Nov 2025",
+    headline: "La IA supone casi el 3% de las emisiones corporativas",
+    url: "https://www.eleconomista.es/tecnologia/noticias/13659020/11/25/la-ia-supone-casi-el-3-de-las-emisiones-corporativas.html",
   },
   {
     publication: "Mundo Deportivo",
     date: "Nov 2025",
     headline:
       "Las 9 herramientas de IA para ser imparable en 2026: los secretos de un experto para mejorar la productividad",
-    url: "#",
+    url: "#", // not indexed — add URL manually
   },
   {
     publication: "Forbes",
     date: "Nov 2025",
     headline: "Así ha sido el Forbes AI Forward Summit 2025",
-    url: "#",
+    url: "#", // behind paywall — add URL manually
+  },
+  {
+    publication: "Forbes",
+    date: "Nov 2025",
+    headline: "Estas son las conclusiones de Forbes AI Forward Summit 2025",
+    url: "#", // behind paywall — add URL manually
+  },
+  {
+    publication: "Forbes",
+    date: "Nov 2025",
+    headline: "Esta es la agenda de Forbes AI Forward Summit 2025",
+    url: "#", // behind paywall — add URL manually
   },
   {
     publication: "El Debate",
     date: "Nov 2025",
     headline:
       "«La IA no está reservada solo para jóvenes»: la empresa catalana que forma a 500.000 personas de todo el mundo",
-    url: "#",
+    url: "https://www.eldebate.com/espana/cataluna/20251104/ia-no-esta-reservada-solo-jovenes-empresa-catalana-forma-500000-personas-todo-mundo_351011.html",
   },
   {
     publication: "Via Empresa",
     date: "Oct 2025",
     headline:
       "CenteIA, la empresa catalana que democratiza la inteligencia artificial en todo el mundo",
-    url: "#",
+    url: "https://www.viaempresa.cat/es/empresa/centeia-empresa-catalana-democratiza-inteligencia-artificial-en-todo-mundo_2221161_102.html",
   },
   {
     publication: "The Objective",
     date: "Oct 2025",
     headline:
       "El gurú del corazón del MIT: «Los popes de Silicon Valley están locos»",
-    url: "#",
+    url: "https://theobjective.com/actualidad/2025-10-14/oscar-corominas-guru-corazon-mit-entrevista/",
   },
   {
     publication: "El Mundo",
     date: "Oct 2025",
     headline:
       "La centella jovencísima de la IA que no teme al futuro laboral",
-    url: "#",
+    url: "https://www.elmundo.es/economia/empresas/2025/10/13/68e539b5e9cf4a7e748b45a3.html",
   },
 ];
 
