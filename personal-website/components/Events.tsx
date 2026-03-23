@@ -29,6 +29,13 @@ const events = [
       "Formación in-company adaptada a tu sector. Casos de uso reales, ROI medible y estrategia de adopción para equipos directivos y mandos intermedios.",
     featured: false,
   },
+  {
+    title: "IA y Liderazgo",
+    category: "Masterclass",
+    description:
+      "Para directivos y líderes de equipo. Cómo tomar decisiones estratégicas en la era de la IA: qué automatizar, cómo gestionar el cambio y liderar equipos en plena transformación digital.",
+    featured: false,
+  },
 ];
 
 export default function Events() {

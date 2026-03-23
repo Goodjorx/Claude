@@ -60,8 +60,8 @@ export default function About() {
               <p>
                 En noviembre de 2022 llegó ChatGPT.{" "}
                 <span className="text-white">El resto es historia.</span> Hoy
-                co-dirijo CenteIA Education — 500.000 personas formadas, 32
-                países, €6M en el primer año.
+                co-dirijo CenteIA Education — 500.000 personas formadas en 32
+                países.
               </p>
             </div>
 

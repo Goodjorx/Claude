@@ -166,7 +166,7 @@ export default function Press() {
             </h2>
 
             {/* Forbes portrait photo */}
-            <div className="relative aspect-[3/4] overflow-hidden bg-[#0d0d0d] border border-white/5">
+            <div className="relative aspect-[1/1] overflow-hidden bg-[#0d0d0d] border border-white/5">
               <Image
                 src="/images/jordi-forbes.jpg"
                 alt="Jordi Segura en Forbes AI Forward Summit"
