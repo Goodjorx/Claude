@@ -25,9 +25,11 @@
  */
 
 import Anthropic from "@anthropic-ai/sdk";
+import OpenAI from "openai";
 import { NextRequest, NextResponse } from "next/server";
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 // ─── Utilidades ──────────────────────────────────────────────────────────────
 
@@ -87,20 +89,44 @@ async function fetchUrlContent(url: string): Promise<string> {
   return text;
 }
 
-async function sendTelegram(chatId: number, text: string) {
+async function sendTelegram(chatId: number, text: string, markdown = true) {
+  const payload: Record<string, unknown> = {
+    chat_id: chatId,
+    text,
+    disable_web_page_preview: true,
+  };
+  if (markdown) payload.parse_mode = "Markdown";
+
   await fetch(
     `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text,
-        parse_mode: "Markdown",
-        disable_web_page_preview: true,
-      }),
+      body: JSON.stringify(payload),
     }
   );
+}
+
+/** Descarga un archivo de Telegram y devuelve su contenido como Buffer */
+async function getTelegramFile(fileId: string): Promise<Buffer> {
+  const metaRes = await fetch(
+    `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/getFile?file_id=${fileId}`
+  );
+  const meta = (await metaRes.json()) as { result: { file_path: string } };
+  const fileUrl = `https://api.telegram.org/file/bot${process.env.TELEGRAM_BOT_TOKEN}/${meta.result.file_path}`;
+  const fileRes = await fetch(fileUrl);
+  return Buffer.from(await fileRes.arrayBuffer());
+}
+
+/** Transcribe un audio usando OpenAI Whisper */
+async function transcribeAudio(buf: Buffer, fileName: string): Promise<string> {
+  const file = new File([buf], fileName, { type: "audio/ogg" });
+  const result = await openai.audio.transcriptions.create({
+    model: "whisper-1",
+    file,
+    language: "es",
+  });
+  return result.text;
 }
 
 // ─── Generación del artículo ─────────────────────────────────────────────────
@@ -109,10 +135,11 @@ interface GenerateOptions {
   input: string;         // idea en texto, o contenido ya scrapeado
   sourceUrl?: string;    // URL original si aplica
   sourceType: "idea" | "url" | "article";
+  dateOverride?: string; // YYYY-MM-DD para batch scheduling
 }
 
 async function generateBlogPost(opts: GenerateOptions): Promise<string> {
-  const { input, sourceUrl, sourceType } = opts;
+  const { input, sourceUrl, sourceType, dateOverride } = opts;
 
   const contextLine =
     sourceType === "url"
@@ -150,7 +177,7 @@ Genera el artículo completo en Markdown con este frontmatter EXACTO al inicio:
 
 ---
 title: "[TÍTULO DIRECTO E IMPACTANTE, sin clickbait vacío]"
-date: "${today()}"
+date: "${dateOverride ?? today()}"
 excerpt: "[1 frase que haga querer leer, máx 160 chars]"
 category: "[IA | Reflexiones | Emprendimiento | Tecnología | Automatización]"
 readTime: "[X min]"
@@ -260,7 +287,7 @@ async function runPipeline(
     }
     await sendTelegram(chatId, `📄 *Borrador generado:*`);
     for (const chunk of chunks) {
-      await sendTelegram(chatId, chunk);
+      await sendTelegram(chatId, chunk, false); // sin parse_mode: MDX rompería el parser
     }
     await sendTelegram(chatId, `_Usa /post [mismo input] para publicarlo._`);
     return;
@@ -288,6 +315,9 @@ export async function POST(req: NextRequest) {
         chat: { id: number };
         from?: { id: number };
         text?: string;
+        voice?: { file_id: string; duration: number };
+        audio?: { file_id: string; file_name?: string };
+        document?: { file_id: string; file_name?: string; mime_type?: string };
       };
     };
 
@@ -342,6 +372,69 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ ok: true });
       }
       await runPipeline(chatId, input, true);
+      return NextResponse.json({ ok: true });
+    }
+
+    // ── Audio / Voz ──
+    if (msg.voice || msg.audio) {
+      const fileId = (msg.voice ?? msg.audio)!.file_id;
+      const fileName = msg.audio?.file_name ?? "audio.ogg";
+      await sendTelegram(chatId, `🎙️ Transcribiendo audio...`);
+      const buf = await getTelegramFile(fileId);
+      const transcription = await transcribeAudio(buf, fileName);
+      await sendTelegram(chatId, `📝 Transcripción:\n_${transcription}_`);
+      await runPipeline(chatId, transcription, false); // draft por defecto
+      return NextResponse.json({ ok: true });
+    }
+
+    // ── CSV / Documento (batch) ──
+    if (msg.document) {
+      const { file_id, file_name = "ideas.csv" } = msg.document;
+      const isCSV =
+        file_name.endsWith(".csv") ||
+        file_name.endsWith(".txt") ||
+        msg.document.mime_type === "text/csv" ||
+        msg.document.mime_type === "text/plain";
+
+      if (!isCSV) {
+        await sendTelegram(chatId, "❌ Mándame un CSV o TXT con una idea por línea.");
+        return NextResponse.json({ ok: true });
+      }
+
+      const buf = await getTelegramFile(file_id);
+      const lines = buf
+        .toString("utf-8")
+        .split("\n")
+        .map((l) => l.trim())
+        .filter((l) => l && !l.startsWith("#") && !l.toLowerCase().startsWith("idea")); // skip header
+
+      const MAX_BATCH = 5;
+      const toProcess = lines.slice(0, MAX_BATCH);
+      const skipped = lines.length - toProcess.length;
+
+      await sendTelegram(
+        chatId,
+        `📋 *Batch recibido:* ${lines.length} ideas${skipped > 0 ? ` (procesando las primeras ${MAX_BATCH}, manda el resto después)` : ""}`
+      );
+
+      for (let i = 0; i < toProcess.length; i++) {
+        const line = toProcess[i];
+        // Formato: "idea, YYYY-MM-DD" — fecha es opcional
+        const parts = line.split(",");
+        const idea = parts[0].replace(/^["']|["']$/g, "").trim();
+        const dateOverride = parts[1]?.trim().match(/^\d{4}-\d{2}-\d{2}$/)?.[0];
+
+        await sendTelegram(chatId, `⏳ (${i + 1}/${toProcess.length}) Generando: _${idea}_`);
+        const mdx = await generateBlogPost({ input: idea, sourceType: "idea", dateOverride });
+        const titleMatch = mdx.match(/^title:\s*["']?(.+?)["']?\s*$/m);
+        const rawTitle = titleMatch?.[1] ?? idea;
+        const postDate = dateOverride ?? today();
+        const slug = `${postDate}-${slugify(rawTitle)}`;
+        const liveUrl = await commitToGitHub(slug, mdx);
+        await sendTelegram(chatId, `✅ Publicado: ${liveUrl}`);
+      }
+
+      await sendTelegram(chatId, `🎉 *Batch completado.*`);
       return NextResponse.json({ ok: true });
     }
 

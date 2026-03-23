@@ -257,15 +257,15 @@ export default function Press() {
                 href={item.url}
                 target={item.url !== "#" ? "_blank" : undefined}
                 rel="noopener noreferrer"
-                className="group flex items-start gap-6 py-4 border-b border-white/5 hover:border-white/12 transition-colors"
+                className="group flex items-start gap-4 py-4 border-b border-white/5 hover:border-white/12 transition-colors"
               >
-                <span className="text-xs text-white/35 shrink-0 w-20 pt-0.5">
+                <span className="hidden sm:block text-xs text-white/35 shrink-0 w-20 pt-0.5">
                   {item.date}
                 </span>
-                <span className="text-xs font-bold text-white/65 shrink-0 w-28 pt-0.5 uppercase tracking-wide group-hover:text-white/85 transition-colors">
+                <span className="text-xs font-bold text-white/65 shrink-0 w-20 sm:w-28 pt-0.5 uppercase tracking-wide group-hover:text-white/85 transition-colors">
                   {item.publication}
                 </span>
-                <span className="text-sm text-white/55 group-hover:text-white/80 transition-colors flex-1 leading-relaxed">
+                <span className="text-sm text-white/55 group-hover:text-white/80 transition-colors flex-1 leading-relaxed min-w-0">
                   {item.headline}
                 </span>
                 <span className="text-white/30 group-hover:text-white/55 transition-colors shrink-0 pt-0.5">
