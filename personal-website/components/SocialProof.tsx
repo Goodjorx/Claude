@@ -86,7 +86,7 @@ export default function SocialProof() {
             han dado el paso. ¿Y tú?
           </p>
           <a
-            href="https://education.centeia.com"
+            href="https://www.centeia.com"
             target="_blank"
             rel="noopener noreferrer"
             className="px-8 py-4 bg-white text-black font-bold hover:bg-white/90 transition-colors text-sm tracking-wide shrink-0"
