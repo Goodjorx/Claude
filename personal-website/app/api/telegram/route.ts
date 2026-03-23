@@ -107,19 +107,19 @@ async function sendTelegram(chatId: number, text: string, markdown = true) {
   );
 }
 
-/** Descarga un archivo de Telegram y devuelve su contenido como Buffer */
-async function getTelegramFile(fileId: string): Promise<Buffer> {
+/** Descarga un archivo de Telegram y devuelve su contenido como ArrayBuffer */
+async function getTelegramFile(fileId: string): Promise<ArrayBuffer> {
   const metaRes = await fetch(
     `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/getFile?file_id=${fileId}`
   );
   const meta = (await metaRes.json()) as { result: { file_path: string } };
   const fileUrl = `https://api.telegram.org/file/bot${process.env.TELEGRAM_BOT_TOKEN}/${meta.result.file_path}`;
   const fileRes = await fetch(fileUrl);
-  return Buffer.from(await fileRes.arrayBuffer());
+  return fileRes.arrayBuffer();
 }
 
 /** Transcribe un audio usando OpenAI Whisper */
-async function transcribeAudio(buf: Buffer, fileName: string): Promise<string> {
+async function transcribeAudio(buf: ArrayBuffer, fileName: string): Promise<string> {
   const file = await toFile(buf, fileName, { type: "audio/ogg" });
   const result = await openai.audio.transcriptions.create({
     model: "whisper-1",
@@ -402,8 +402,8 @@ export async function POST(req: NextRequest) {
       }
 
       const buf = await getTelegramFile(file_id);
-      const lines = buf
-        .toString("utf-8")
+      const lines = new TextDecoder("utf-8")
+        .decode(buf)
         .split("\n")
         .map((l) => l.trim())
         .filter((l) => l && !l.startsWith("#") && !l.toLowerCase().startsWith("idea")); // skip header
