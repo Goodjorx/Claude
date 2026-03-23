@@ -33,7 +33,7 @@ export default function Hero() {
         {/* Pre-label */}
         <div className="animate-slide-left mb-10">
           <span className="text-xs text-white/55 tracking-[0.35em] uppercase font-medium">
-            Data Scientist · Speaker · CEO de CenteIA Education
+            Ingeniero · Speaker · CEO de CenteIA Education
           </span>
         </div>
 

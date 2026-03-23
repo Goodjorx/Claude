@@ -102,7 +102,7 @@ export default function Events() {
                     <span
                       className={`text-xs px-2 py-1 font-semibold uppercase tracking-widest ${
                         event.featured
-                          ? "bg-white text-white"
+                          ? "bg-white text-black"
                           : "border border-[#333] text-[#777]"
                       }`}
                     >
