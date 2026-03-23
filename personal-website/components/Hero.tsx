@@ -1,18 +1,27 @@
+import Image from "next/image";
+
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col justify-end pb-16 px-6 md:px-12 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-[#080808]">
-        {/* Subtle radial glow top-right */}
+        {/* Hero photo */}
+        <Image
+          src="/images/jordi-panel.jpg"
+          alt="Jordi Segura"
+          fill
+          className="object-cover object-center"
+          priority
+          quality={85}
+        />
+        {/* Dark overlay — heavy at bottom for text legibility */}
         <div
-          className="absolute -top-60 -right-60 w-[800px] h-[800px] pointer-events-none"
+          className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(circle, rgba(255,255,255,0.035) 0%, transparent 65%)",
+              "linear-gradient(to top, #080808 0%, #080808 20%, rgba(8,8,8,0.78) 55%, rgba(8,8,8,0.45) 100%)",
           }}
         />
-        {/* Fade bottom for text */}
-        <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#080808] to-transparent" />
       </div>
 
       {/* Thin top rule */}

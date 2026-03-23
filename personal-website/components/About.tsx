@@ -1,21 +1,4 @@
-function PhotoSlot({
-  aspectClass,
-  label,
-}: {
-  aspectClass: string;
-  label?: string;
-}) {
-  return (
-    <div className={`relative ${aspectClass} overflow-hidden bg-[#0d0d0d] border border-white/5`}>
-      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent" />
-      {label && (
-        <div className="absolute bottom-4 left-4 text-xs text-white/20 tracking-widest uppercase">
-          {label}
-        </div>
-      )}
-    </div>
-  );
-}
+import Image from "next/image";
 
 export default function About() {
   return (
@@ -98,10 +81,34 @@ export default function About() {
             </div>
           </div>
 
-          {/* Right: photo slots (add photos to public/images/) */}
+          {/* Right: photos */}
           <div className="space-y-4">
-            <PhotoSlot aspectClass="aspect-[4/5]" />
-            <PhotoSlot aspectClass="aspect-[16/9]" label="Contenido · IA" />
+            {/* Portrait — Forbes Summit */}
+            <div className="relative aspect-[4/5] overflow-hidden bg-[#0d0d0d] border border-white/5">
+              <Image
+                src="/images/jordi-forbes.jpg"
+                alt="Jordi Segura en Forbes AI Forward Summit"
+                fill
+                className="object-cover object-top"
+                quality={90}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080808]/40 to-transparent" />
+            </div>
+
+            {/* Panel — speaking */}
+            <div className="relative aspect-[16/9] overflow-hidden bg-[#0d0d0d] border border-white/5">
+              <Image
+                src="/images/jordi-panel.jpg"
+                alt="Jordi Segura en panel de expertos"
+                fill
+                className="object-cover object-center"
+                quality={85}
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#080808]/30 to-transparent" />
+              <div className="absolute bottom-4 left-4 text-xs text-white/30 tracking-widest uppercase">
+                Forbes AI Forward Summit · 2025
+              </div>
+            </div>
           </div>
         </div>
 
