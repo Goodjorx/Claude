@@ -29,12 +29,12 @@ export default function About() {
             <h2 className="text-headline text-white mb-8">
               Nací en Igualada.
               <br />
-              <span className="text-white/30">La IA me cambió</span>
+              <span className="text-white/50">La IA me cambió</span>
               <br />
               la vida.
             </h2>
 
-            <div className="space-y-5 text-white/55 leading-relaxed">
+            <div className="space-y-5 text-white/70 leading-relaxed">
               <p>
                 Crecí en Igualada, un pueblo pequeño cerca de Barcelona, en una
                 familia humilde rodeado de amigos que conservo desde los dos
@@ -119,10 +119,10 @@ export default function About() {
                   key={i}
                   className="flex gap-8 md:gap-12 items-start py-5 border-b border-white/4 group hover:border-white/10 transition-colors"
                 >
-                  <span className="text-xs font-mono text-white/30 w-12 shrink-0 pt-0.5 group-hover:text-white/60 transition-colors">
+                  <span className="text-xs font-mono text-white/50 w-12 shrink-0 pt-0.5 group-hover:text-white/70 transition-colors">
                     {item.year}
                   </span>
-                  <span className="text-white/60 group-hover:text-white transition-colors leading-snug">
+                  <span className="text-white/75 group-hover:text-white transition-colors leading-snug">
                     {item.milestone}
                   </span>
                 </div>

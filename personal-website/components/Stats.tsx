@@ -25,7 +25,7 @@ export default function Stats() {
               >
                 {stat.value}
               </div>
-              <div className="text-sm text-[#666] leading-snug">{stat.label}</div>
+              <div className="text-sm text-[#888] leading-snug">{stat.label}</div>
             </div>
           ))}
         </div>

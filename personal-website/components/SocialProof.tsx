@@ -36,16 +36,16 @@ export default function SocialProof() {
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
           <div className="w-8 h-px bg-white/20" />
-          <span className="text-xs text-white/35 tracking-[0.3em] uppercase font-semibold">
+          <span className="text-xs text-white/55 tracking-[0.3em] uppercase font-semibold">
             Historias reales
           </span>
         </div>
         <h2 className="text-headline text-white mb-4">
           Lo que más me llena:
           <br />
-          <span className="text-[#444]">ver la transformación.</span>
+          <span className="text-[#666]">ver la transformación.</span>
         </h2>
-        <p className="text-[#666] max-w-xl mb-16 leading-relaxed">
+        <p className="text-[#888] max-w-xl mb-16 leading-relaxed">
           Estas son solo algunas de las historias de nuestra primera promoción.
           Son la recompensa real de este trabajo.
         </p>
@@ -58,7 +58,7 @@ export default function SocialProof() {
               className="p-8 bg-[#050505] hover:bg-[#0a0a0a] transition-colors group"
             >
               {/* Tag */}
-              <span className="text-xs text-[#444] uppercase tracking-widest border border-[#1a1a1a] px-2 py-1">
+              <span className="text-xs text-[#666] uppercase tracking-widest border border-[#1a1a1a] px-2 py-1">
                 {story.tag}
               </span>
 
@@ -71,7 +71,7 @@ export default function SocialProof() {
               </div>
 
               {/* Quote */}
-              <p className="text-[#555] text-sm leading-relaxed group-hover:text-[#777] transition-colors">
+              <p className="text-[#777] text-sm leading-relaxed group-hover:text-[#999] transition-colors">
                 &ldquo;{story.quote}&rdquo;
               </p>
             </div>
@@ -80,7 +80,7 @@ export default function SocialProof() {
 
         {/* Bottom stat */}
         <div className="mt-16 flex flex-col md:flex-row items-center justify-between gap-8 pt-12 border-t border-[#1a1a1a]">
-          <p className="text-[#555] text-lg">
+          <p className="text-[#777] text-lg">
             Más de{" "}
             <span className="text-white font-bold">500.000 personas</span> ya
             han dado el paso. ¿Y tú?

@@ -37,10 +37,10 @@ export default function Services() {
             <h2 className="text-headline text-white">
               Soluciones IA
               <br />
-              <span className="text-[#444]">para personas y empresas.</span>
+              <span className="text-[#666]">para personas y empresas.</span>
             </h2>
           </div>
-          <p className="text-[#666] max-w-sm leading-relaxed md:pb-2">
+          <p className="text-[#888] max-w-sm leading-relaxed md:pb-2">
             Combino divulgación, auditoría y estrategia adaptada a tus
             necesidades. Sin tecnicismos innecesarios.
           </p>
@@ -77,7 +77,7 @@ export default function Services() {
                 <h3 className="text-2xl font-bold text-white mb-4">
                   {service.title}
                 </h3>
-                <p className="text-[#666] leading-relaxed mb-8">
+                <p className="text-[#888] leading-relaxed mb-8">
                   {service.description}
                 </p>
 
@@ -86,7 +86,7 @@ export default function Services() {
                   {service.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-xs px-3 py-1 border border-[#222] text-[#555] uppercase tracking-wide"
+                      className="text-xs px-3 py-1 border border-[#222] text-[#777] uppercase tracking-wide"
                     >
                       {tag}
                     </span>
@@ -100,7 +100,7 @@ export default function Services() {
                 className={`inline-flex items-center gap-3 mt-10 text-sm font-semibold tracking-wide transition-colors ${
                   service.highlight
                     ? "text-white hover:text-white/70"
-                    : "text-[#666] hover:text-white"
+                    : "text-[#888] hover:text-white"
                 }`}
               >
                 {service.cta}
