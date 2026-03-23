@@ -19,7 +19,7 @@ const featured = [
     date: "Nov 2025",
     headline: "The 50 Dreams List and the man behind it",
     type: "Feature",
-    url: "#", // behind paywall — add URL manually
+    url: "https://forbes.es/lista-forbes-the-50-dreams-list-and-the-man-behind/",
   },
   {
     publication: "La Vanguardia",
@@ -38,7 +38,7 @@ const allPress = [
     date: "Mar 2026",
     headline:
       'Jordi Segura, experto en IA: "Uno de los métodos que mejor nos sirven es el método ROCE"',
-    url: "#", // add URL manually
+    url: "https://www.elconfidencial.com/alma-corazon-vida/2026-02-18/jordi-segura-experto-inteligencia-artificial-metodos-mejor-sirven-roce-1qrt_4305450/",
   },
   {
     publication: "The New Barcelona Post",
@@ -71,25 +71,25 @@ const allPress = [
     date: "Nov 2025",
     headline:
       "Las 9 herramientas de IA para ser imparable en 2026: los secretos de un experto para mejorar la productividad",
-    url: "#", // not indexed — add URL manually
+    url: "https://www.mundodeportivo.com/tecnologia/20251129/1002576983/9-herramientas-ia-imparable-2026-secretos-experto-mejorar-productividad-nmd.html",
   },
   {
     publication: "Forbes",
     date: "Nov 2025",
     headline: "Así ha sido el Forbes AI Forward Summit 2025",
-    url: "#", // behind paywall — add URL manually
+    url: "#", // add URL manually
   },
   {
     publication: "Forbes",
     date: "Nov 2025",
     headline: "Estas son las conclusiones de Forbes AI Forward Summit 2025",
-    url: "#", // behind paywall — add URL manually
+    url: "#", // add URL manually
   },
   {
     publication: "Forbes",
     date: "Nov 2025",
     headline: "Esta es la agenda de Forbes AI Forward Summit 2025",
-    url: "#", // behind paywall — add URL manually
+    url: "#", // add URL manually
   },
   {
     publication: "El Debate",
@@ -118,6 +118,13 @@ const allPress = [
     headline:
       "La centella jovencísima de la IA que no teme al futuro laboral",
     url: "https://www.elmundo.es/economia/empresas/2025/10/13/68e539b5e9cf4a7e748b45a3.html",
+  },
+  {
+    publication: "Forbes Brandvoice",
+    date: "2025",
+    headline:
+      "CenteIA Education: cuando la IA deja de ser técnica y empieza a ser profesional",
+    url: "https://forbes.es/brandvoice/882874/centeia-education-cuando-la-inteligencia-artificial-deja-de-ser-tecnica-y-empieza-a-ser-profesional/",
   },
 ];
 
