@@ -7,8 +7,8 @@ export default function Hero() {
       <div className="absolute inset-0 bg-[#080808]">
         {/* Hero photo */}
         <Image
-          src="/images/jordi-panel.jpg"
-          alt="Jordi Segura"
+          src="/images/jordi-stage.jpg"
+          alt="Jordi Segura hablando en conferencia"
           fill
           className="object-cover object-center"
           priority

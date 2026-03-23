@@ -1,5 +1,16 @@
 import Image from "next/image";
 
+const timeline = [
+  { year: "2018", milestone: "Momento click — primera noche investigando IA" },
+  { year: "2020", milestone: "Erasmus en Italia · Sistemas de recomendación" },
+  { year: "2021", milestone: "Máster en Data Science & IA · UPC Barcelona" },
+  { year: "2022", milestone: "Data Scientist · Schneider Electric" },
+  { year: "2022", milestone: "CenteIA Consulting — primeros clientes" },
+  { year: "2023", milestone: "Head of AI · MasterChef World" },
+  { year: "2024", milestone: "CEO & Co-founder · CenteIA Education" },
+  { year: "2025", milestone: "500K+ personas formadas · Forbes AI Forward Summit" },
+];
+
 export default function About() {
   return (
     <section id="sobre-mi" className="py-24 md:py-40 px-6 md:px-12">
@@ -7,7 +18,7 @@ export default function About() {
         {/* Section label */}
         <div className="flex items-center gap-4 mb-16">
           <div className="w-8 h-px bg-white/20" />
-          <span className="text-xs text-white/35 tracking-[0.3em] uppercase font-medium">
+          <span className="text-xs text-white/50 tracking-[0.3em] uppercase font-medium">
             Sobre mí
           </span>
         </div>
@@ -23,7 +34,7 @@ export default function About() {
               la vida.
             </h2>
 
-            <div className="space-y-5 text-white/40 leading-relaxed">
+            <div className="space-y-5 text-white/55 leading-relaxed">
               <p>
                 Crecí en Igualada, un pueblo pequeño cerca de Barcelona, en una
                 familia humilde rodeado de amigos que conservo desde los dos
@@ -55,48 +66,30 @@ export default function About() {
             </div>
 
             {/* Quote */}
-            <div className="border-l border-white/15 pl-6 py-2 mt-8">
+            <div className="border-l-2 border-white/20 pl-6 py-1 mt-10">
               <p className="text-white italic text-lg leading-relaxed">
                 &ldquo;La suerte es el momento en el que el talento encuentra
                 la ocasión.&rdquo;
               </p>
-              <p className="text-white/25 text-sm mt-2">
-                Mi filosofía — junto a &ldquo;memento mori&rdquo; tatuado.
-              </p>
-            </div>
-
-            {/* Quick facts */}
-            <div className="grid grid-cols-2 gap-3 mt-10">
-              {[
-                { icon: "📍", text: "Andorra la Vella" },
-                { icon: "🎓", text: "Ing. Telecom · MSc IA (UPC)" },
-                { icon: "🐱", text: "5 gatos y una tortuga" },
-                { icon: "🎾", text: "Pádel, fútbol, gym" },
-              ].map((item) => (
-                <div key={item.text} className="flex items-center gap-3">
-                  <span className="text-base">{item.icon}</span>
-                  <span className="text-sm text-white/30">{item.text}</span>
-                </div>
-              ))}
             </div>
           </div>
 
-          {/* Right: photos */}
+          {/* Right: photos — two different images */}
           <div className="space-y-4">
-            {/* Portrait — Forbes Summit */}
-            <div className="relative aspect-[4/5] overflow-hidden bg-[#0d0d0d] border border-white/5">
+            {/* Studio portrait */}
+            <div className="relative aspect-[4/5] overflow-hidden bg-[#0d0d0d]">
               <Image
-                src="/images/jordi-forbes.jpg"
-                alt="Jordi Segura en Forbes AI Forward Summit"
+                src="/images/jordi-studio.jpg"
+                alt="Jordi Segura"
                 fill
                 className="object-cover object-top"
                 quality={90}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#080808]/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080808]/50 to-transparent" />
             </div>
 
-            {/* Panel — speaking */}
-            <div className="relative aspect-[16/9] overflow-hidden bg-[#0d0d0d] border border-white/5">
+            {/* Speaking — Forbes panel */}
+            <div className="relative aspect-[16/9] overflow-hidden bg-[#0d0d0d]">
               <Image
                 src="/images/jordi-panel.jpg"
                 alt="Jordi Segura en panel de expertos"
@@ -105,42 +98,36 @@ export default function About() {
                 quality={85}
               />
               <div className="absolute inset-0 bg-gradient-to-r from-[#080808]/30 to-transparent" />
-              <div className="absolute bottom-4 left-4 text-xs text-white/30 tracking-widest uppercase">
+              <div className="absolute bottom-4 left-4 text-xs text-white/50 tracking-widest uppercase">
                 Forbes AI Forward Summit · 2025
               </div>
             </div>
           </div>
         </div>
 
-        {/* Timeline */}
-        <div className="mt-20 pt-16 border-t border-white/6">
-          <p className="text-xs text-white/25 tracking-[0.3em] uppercase mb-8">
+        {/* Vertical timeline */}
+        <div className="mt-24 pt-16 border-t border-white/6">
+          <p className="text-xs text-white/40 tracking-[0.3em] uppercase mb-12">
             Trayectoria
           </p>
-          <div className="flex flex-wrap gap-3">
-            {[
-              { label: "UPC — Ingeniería de Telecom", year: "~2018" },
-              { label: "Italia — Recommendation Systems", year: "~2020" },
-              { label: "Máster Data Science & IA", year: "2021" },
-              { label: "Data Scientist", year: "2022" },
-              { label: "Learning Heroes — IA PRO4", year: "2022" },
-              { label: "Schneider Electric", year: "Anterior" },
-              { label: "CenteIA Consulting", year: "2022" },
-              { label: "MasterChef World — Head of AI", year: "2023" },
-              { label: "CenteIA Education — CEO", year: "2024" },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="flex items-center gap-2 px-4 py-2 border border-white/6 bg-white/2 hover:border-white/15 transition-colors group"
-              >
-                <span className="text-xs text-white/25 font-mono">
-                  {item.year}
-                </span>
-                <span className="text-sm text-white/40 group-hover:text-white/70 transition-colors">
-                  {item.label}
-                </span>
-              </div>
-            ))}
+          <div className="relative">
+            {/* Vertical line */}
+            <div className="absolute left-[3.5rem] top-0 bottom-0 w-px bg-white/6 hidden md:block" />
+            <div className="space-y-0">
+              {timeline.map((item, i) => (
+                <div
+                  key={i}
+                  className="flex gap-8 md:gap-12 items-start py-5 border-b border-white/4 group hover:border-white/10 transition-colors"
+                >
+                  <span className="text-xs font-mono text-white/30 w-12 shrink-0 pt-0.5 group-hover:text-white/60 transition-colors">
+                    {item.year}
+                  </span>
+                  <span className="text-white/60 group-hover:text-white transition-colors leading-snug">
+                    {item.milestone}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
