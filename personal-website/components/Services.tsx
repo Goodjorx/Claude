@@ -63,15 +63,16 @@ export default function Services() {
                   <span className="text-5xl font-black text-[#1a1a1a] group-hover:text-white transition-colors duration-500">
                     {service.number}
                   </span>
-                  <div
-                    className={`w-10 h-10 flex items-center justify-center border ${
+                  <a
+                    href={service.ctaHref}
+                    className={`w-10 h-10 flex items-center justify-center border transition-colors hover:bg-white hover:text-black hover:border-white ${
                       service.highlight
                         ? "border-white/20 text-white"
                         : "border-[#333] text-[#555]"
                     }`}
                   >
                     →
-                  </div>
+                  </a>
                 </div>
 
                 <h3 className="text-2xl font-bold text-white mb-4">
