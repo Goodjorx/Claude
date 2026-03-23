@@ -57,6 +57,34 @@ function isUrl(text: string): boolean {
   }
 }
 
+/** Extrae todas las URLs de un texto y devuelve las URLs + el prompt restante */
+function extractUrlsAndPrompt(text: string): { urls: string[]; prompt: string } {
+  const urlRegex = /https?:\/\/[^\s]+/g;
+  const urls = text.match(urlRegex) ?? [];
+  const prompt = text.replace(urlRegex, "").replace(/\s{2,}/g, " ").trim();
+  return { urls, prompt };
+}
+
+/** Lee un tweet via oEmbed (no requiere API key de X) */
+async function fetchXContent(url: string): Promise<string> {
+  const oembedUrl = `https://publish.twitter.com/oembed?url=${encodeURIComponent(url)}&omit_script=true`;
+  const res = await fetch(oembedUrl, { signal: AbortSignal.timeout(8_000) });
+  if (!res.ok) throw new Error(`No se pudo leer el tweet (${res.status})`);
+  const data = (await res.json()) as { html: string; author_name: string };
+  const tweetText = data.html
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"')
+    .replace(/\s+/g, " ").trim();
+  return `Post de @${data.author_name} en X:\n${tweetText}`;
+}
+
+/** Fetcher universal: elige oEmbed para X/Twitter, scraping normal para el resto */
+async function fetchAnyUrl(url: string): Promise<string> {
+  const isX = /^https?:\/\/(twitter\.com|x\.com)\//.test(url);
+  if (isX) return fetchXContent(url);
+  return fetchUrlContent(url);
+}
+
 /** Extrae el texto principal de una página web (limpia el HTML) */
 async function fetchUrlContent(url: string): Promise<string> {
   const res = await fetch(url, {
@@ -134,7 +162,7 @@ async function transcribeAudio(buf: ArrayBuffer, fileName: string): Promise<stri
 interface GenerateOptions {
   input: string;         // idea en texto, o contenido ya scrapeado
   sourceUrl?: string;    // URL original si aplica
-  sourceType: "idea" | "url" | "article";
+  sourceType: "idea" | "url" | "article" | "mixed";
   dateOverride?: string; // YYYY-MM-DD para batch scheduling
 }
 
@@ -146,6 +174,8 @@ async function generateBlogPost(opts: GenerateOptions): Promise<string> {
       ? `A continuación tienes el contenido de este artículo/web (${sourceUrl}). Úsalo como base para generar el post en la voz de Jordi:\n\n${input}`
       : sourceType === "article"
       ? `A continuación tienes un artículo o texto que Jordi quiere adaptar a su blog con su propia voz:\n\n${input}`
+      : sourceType === "mixed"
+      ? `Jordi quiere escribir un post combinando estas fuentes e instrucciones. Úsalas como inspiración y escríbelo en su voz:\n\n${input}`
       : `Jordi quiere escribir sobre esta idea: ${input}`;
 
   const message = await anthropic.messages.create({
@@ -256,24 +286,51 @@ async function runPipeline(
   rawInput: string,
   publish: boolean
 ) {
-  // 1. Determinar si es URL, artículo largo, o idea
   const trimmed = rawInput.trim();
-  let sourceType: "idea" | "url" | "article" = "idea";
+  const { urls, prompt } = extractUrlsAndPrompt(trimmed);
+
+  let sourceType: "idea" | "url" | "article" | "mixed" = "idea";
   let contentForClaude = trimmed;
   let sourceUrl: string | undefined;
 
-  if (isUrl(trimmed)) {
+  if (urls.length === 0) {
+    // Sin URLs: idea corta o artículo largo pegado
+    if (trimmed.length > 500) {
+      sourceType = "article";
+      await sendTelegram(chatId, `📝 Texto largo detectado. Adaptando a tu voz...`);
+    } else {
+      sourceType = "idea";
+      await sendTelegram(chatId, `💡 Generando artículo desde la idea...`);
+    }
+  } else if (urls.length === 1 && !prompt) {
+    // Una sola URL sin prompt — comportamiento original
     sourceType = "url";
-    sourceUrl = trimmed;
+    sourceUrl = urls[0];
     await sendTelegram(chatId, `🌐 Leyendo el enlace...`);
-    contentForClaude = await fetchUrlContent(trimmed);
+    contentForClaude = await fetchAnyUrl(urls[0]);
     await sendTelegram(chatId, `✅ Contenido extraído. Generando artículo...`);
-  } else if (trimmed.length > 500) {
-    // Long text = treat as article to adapt
-    sourceType = "article";
-    await sendTelegram(chatId, `📝 Texto largo detectado. Adaptando a tu voz...`);
   } else {
-    await sendTelegram(chatId, `💡 Generando artículo desde la idea...`);
+    // Múltiples URLs, o URL + prompt — modo combinado
+    sourceType = "mixed";
+    const label = urls.length === 1 ? "1 fuente" : `${urls.length} fuentes`;
+    await sendTelegram(chatId, `🌐 Leyendo ${label}...`);
+
+    const fetched: string[] = [];
+    for (const url of urls) {
+      try {
+        const content = await fetchAnyUrl(url);
+        fetched.push(`--- Fuente: ${url} ---\n${content.slice(0, 4000)}`);
+      } catch {
+        fetched.push(`--- Fuente: ${url} --- (no se pudo acceder)`);
+      }
+    }
+
+    contentForClaude = [
+      prompt ? `Instrucción de Jordi: ${prompt}` : "",
+      ...fetched,
+    ].filter(Boolean).join("\n\n");
+
+    await sendTelegram(chatId, `✅ Fuentes leídas. Generando artículo...`);
   }
 
   // 2. Generate with Claude
@@ -345,8 +402,11 @@ export async function POST(req: NextRequest) {
         `_Ej: /post Por qué el 90% de las empresas fracasan con la IA_\n\n` +
         `🔗 */post [URL]*\n` +
         `_Ej: /post https://techcrunch.com/..._\n\n` +
+        `🔗🔗 */post [prompt] [URL1] [URL2]*\n` +
+        `_Ej: /post Cómo la IA soluciona el clima https://x.com/... https://paper.com/..._\n\n` +
         `📄 */post [artículo largo]*\n` +
         `_Pega texto y lo adapto a tu voz_\n\n` +
+        `🎙️ *Manda un audio* — Lo transcribo y genero un borrador\n\n` +
         `👁 */draft [lo mismo]* — Genera sin publicar\n\n` +
         `En ~30s el artículo está en vivo en jordisegura.com/blog`
       );
