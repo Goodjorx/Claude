@@ -35,8 +35,8 @@ export default function SocialProof() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
-          <div className="w-8 h-px bg-[#e8510a]" />
-          <span className="text-xs text-[#e8510a] tracking-[0.3em] uppercase font-semibold">
+          <div className="w-8 h-px bg-white/20" />
+          <span className="text-xs text-white/35 tracking-[0.3em] uppercase font-semibold">
             Historias reales
           </span>
         </div>
@@ -64,7 +64,7 @@ export default function SocialProof() {
 
               {/* Result */}
               <div className="mt-6 mb-4">
-                <div className="text-[#e8510a] font-black text-lg leading-tight">
+                <div className="text-white font-black text-lg leading-tight">
                   {story.result}
                 </div>
                 <div className="text-white font-semibold mt-1">{story.name}</div>
@@ -89,7 +89,7 @@ export default function SocialProof() {
             href="https://education.centeia.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-8 py-4 bg-[#e8510a] text-white font-bold hover:bg-[#ff6a24] transition-colors text-sm tracking-wide shrink-0"
+            className="px-8 py-4 bg-white text-black font-bold hover:bg-white/90 transition-colors text-sm tracking-wide shrink-0"
           >
             VER PROGRAMAS DE CenteIA →
           </a>

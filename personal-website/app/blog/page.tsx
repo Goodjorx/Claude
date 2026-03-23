@@ -20,8 +20,8 @@ export default function BlogPage() {
       <section className="pt-36 pb-16 px-6 md:px-12 border-b border-[#1a1a1a]">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-8 h-px bg-[#e8510a]" />
-            <span className="text-xs text-[#e8510a] tracking-[0.3em] uppercase font-semibold">
+            <div className="w-8 h-px bg-white/20" />
+            <span className="text-xs text-white/35 tracking-[0.3em] uppercase font-semibold">
               Blog
             </span>
           </div>
@@ -59,14 +59,14 @@ export default function BlogPage() {
                       </span>
                       <span className="text-[#444] text-xs">{post.readTime}</span>
                     </div>
-                    <h2 className="text-xl md:text-2xl font-bold text-white group-hover:text-[#e8510a] transition-colors leading-snug mb-3">
+                    <h2 className="text-xl md:text-2xl font-bold text-white group-hover:text-white transition-colors leading-snug mb-3">
                       {post.title}
                     </h2>
                     <p className="text-[#666] leading-relaxed max-w-2xl">
                       {post.excerpt}
                     </p>
                   </div>
-                  <div className="shrink-0 flex items-center gap-3 text-[#444] group-hover:text-[#e8510a] transition-colors md:pt-1">
+                  <div className="shrink-0 flex items-center gap-3 text-[#444] group-hover:text-white transition-colors md:pt-1">
                     <span className="text-sm font-mono">
                       {new Date(post.date).toLocaleDateString("es-ES", {
                         year: "numeric",

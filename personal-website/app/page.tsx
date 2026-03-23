@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import Stats from "@/components/Stats";
 import About from "@/components/About";
 import Services from "@/components/Services";
+import Press from "@/components/Press";
 import Events from "@/components/Events";
 import SocialProof from "@/components/SocialProof";
 import Contact from "@/components/Contact";
@@ -16,6 +17,7 @@ export default function Home() {
       <Stats />
       <About />
       <Services />
+      <Press />
       <Events />
       <SocialProof />
       <Contact />

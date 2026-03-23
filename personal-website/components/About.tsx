@@ -6,24 +6,24 @@ export default function About() {
       <div className="max-w-7xl mx-auto">
         {/* Section label */}
         <div className="flex items-center gap-4 mb-16">
-          <div className="w-8 h-px bg-[#e8510a]" />
-          <span className="text-xs text-[#e8510a] tracking-[0.3em] uppercase font-semibold">
+          <div className="w-8 h-px bg-white/20" />
+          <span className="text-xs text-white/35 tracking-[0.3em] uppercase font-medium">
             Sobre mí
           </span>
         </div>
 
         <div className="grid md:grid-cols-2 gap-16 md:gap-24 items-start">
-          {/* Left: story + headline */}
+          {/* Left: story */}
           <div>
             <h2 className="text-headline text-white mb-8">
               Nací en Igualada.
               <br />
-              <span className="text-[#444]">La IA me cambió</span>
+              <span className="text-white/30">La IA me cambió</span>
               <br />
               la vida.
             </h2>
 
-            <div className="space-y-5 text-[#888] leading-relaxed">
+            <div className="space-y-5 text-white/40 leading-relaxed">
               <p>
                 Crecí en Igualada, un pueblo pequeño cerca de Barcelona, en una
                 familia humilde rodeado de amigos que conservo desde los dos
@@ -54,13 +54,13 @@ export default function About() {
               </p>
             </div>
 
-            {/* Philosophy */}
-            <div className="border-l-2 border-[#e8510a] pl-6 py-2 mt-8">
+            {/* Quote */}
+            <div className="border-l border-white/15 pl-6 py-2 mt-8">
               <p className="text-white italic text-lg leading-relaxed">
                 &ldquo;La suerte es el momento en el que el talento encuentra
                 la ocasión.&rdquo;
               </p>
-              <p className="text-[#555] text-sm mt-2">
+              <p className="text-white/25 text-sm mt-2">
                 Mi filosofía — junto a &ldquo;memento mori&rdquo; tatuado.
               </p>
             </div>
@@ -75,7 +75,7 @@ export default function About() {
               ].map((item) => (
                 <div key={item.text} className="flex items-center gap-3">
                   <span className="text-base">{item.icon}</span>
-                  <span className="text-sm text-[#666]">{item.text}</span>
+                  <span className="text-sm text-white/30">{item.text}</span>
                 </div>
               ))}
             </div>
@@ -83,11 +83,11 @@ export default function About() {
 
           {/* Right: photos */}
           <div className="space-y-4">
-            {/* Main portrait: panel/relaxed photo */}
-            <div className="relative aspect-[4/5] overflow-hidden bg-[#0f0f0f]">
+            {/* Portrait — Forbes Summit */}
+            <div className="relative aspect-[4/5] overflow-hidden bg-[#0d0d0d] border border-white/5">
               <Image
-                src="/images/jordi-panel.jpg"
-                alt="Jordi Segura"
+                src="/images/jordi-forbes.jpg"
+                alt="Jordi Segura en Forbes AI Forward Summit"
                 fill
                 className="object-cover object-top"
                 quality={90}
@@ -95,26 +95,26 @@ export default function About() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#080808]/40 to-transparent" />
             </div>
 
-            {/* Secondary: studio photo */}
-            <div className="relative aspect-[16/9] overflow-hidden bg-[#0f0f0f]">
+            {/* Panel — speaking */}
+            <div className="relative aspect-[16/9] overflow-hidden bg-[#0d0d0d] border border-white/5">
               <Image
-                src="/images/jordi-studio.jpg"
-                alt="Jordi Segura en el estudio"
+                src="/images/jordi-panel.jpg"
+                alt="Jordi Segura en panel de expertos"
                 fill
                 className="object-cover object-center"
                 quality={85}
               />
               <div className="absolute inset-0 bg-gradient-to-r from-[#080808]/30 to-transparent" />
-              <div className="absolute bottom-4 left-4 text-xs text-white/50 tracking-widest uppercase">
-                Contenido · IA
+              <div className="absolute bottom-4 left-4 text-xs text-white/30 tracking-widest uppercase">
+                Forbes AI Forward Summit · 2025
               </div>
             </div>
           </div>
         </div>
 
-        {/* Career timeline chips */}
-        <div className="mt-20 pt-16 border-t border-[#1a1a1a]">
-          <p className="text-xs text-[#555] tracking-[0.3em] uppercase mb-8">
+        {/* Timeline */}
+        <div className="mt-20 pt-16 border-t border-white/6">
+          <p className="text-xs text-white/25 tracking-[0.3em] uppercase mb-8">
             Trayectoria
           </p>
           <div className="flex flex-wrap gap-3">
@@ -131,12 +131,12 @@ export default function About() {
             ].map((item) => (
               <div
                 key={item.label}
-                className="flex items-center gap-2 px-4 py-2 border border-[#1a1a1a] bg-[#0f0f0f] hover:border-[#333] transition-colors group"
+                className="flex items-center gap-2 px-4 py-2 border border-white/6 bg-white/2 hover:border-white/15 transition-colors group"
               >
-                <span className="text-xs text-[#555] font-mono">
+                <span className="text-xs text-white/25 font-mono">
                   {item.year}
                 </span>
-                <span className="text-sm text-[#888] group-hover:text-white transition-colors">
+                <span className="text-sm text-white/40 group-hover:text-white/70 transition-colors">
                   {item.label}
                 </span>
               </div>

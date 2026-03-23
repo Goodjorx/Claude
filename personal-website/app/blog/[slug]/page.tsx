@@ -46,7 +46,7 @@ export default async function PostPage({ params }: Props) {
           </Link>
 
           <div className="flex items-center gap-3 mb-6">
-            <span className="text-xs px-2 py-1 border border-[#e8510a]/50 text-[#e8510a] uppercase tracking-widest">
+            <span className="text-xs px-2 py-1 border border-white/20 text-white uppercase tracking-widest">
               {post.category}
             </span>
             <span className="text-[#444] text-xs">{post.readTime}</span>
@@ -61,7 +61,7 @@ export default async function PostPage({ params }: Props) {
           </p>
 
           <div className="flex items-center gap-4 pt-6 border-t border-[#1a1a1a]">
-            <div className="w-8 h-8 rounded-full bg-[#e8510a] flex items-center justify-center text-white text-xs font-black">
+            <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-white text-xs font-black">
               JS
             </div>
             <div>
@@ -109,7 +109,7 @@ export default async function PostPage({ params }: Props) {
               ),
               li: ({ children }) => (
                 <li className="text-[#888] flex gap-3">
-                  <span className="text-[#e8510a] shrink-0">—</span>
+                  <span className="text-white shrink-0">—</span>
                   <span>{children}</span>
                 </li>
               ),
@@ -119,7 +119,7 @@ export default async function PostPage({ params }: Props) {
                 </ol>
               ),
               blockquote: ({ children }) => (
-                <blockquote className="border-l-2 border-[#e8510a] pl-6 my-8 text-[#aaa] italic">
+                <blockquote className="border-l-2 border-white/20 pl-6 my-8 text-[#aaa] italic">
                   {children}
                 </blockquote>
               ),
@@ -128,14 +128,14 @@ export default async function PostPage({ params }: Props) {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#e8510a] hover:text-[#ff6a24] transition-colors underline underline-offset-2"
+                  className="text-white hover:text-white/70 transition-colors underline underline-offset-2"
                 >
                   {children}
                 </a>
               ),
               hr: () => <hr className="border-[#1a1a1a] my-12" />,
               code: ({ children }) => (
-                <code className="bg-[#0f0f0f] border border-[#1a1a1a] px-2 py-0.5 rounded text-sm text-[#e8510a] font-mono">
+                <code className="bg-[#0f0f0f] border border-[#1a1a1a] px-2 py-0.5 rounded text-sm text-white font-mono">
                   {children}
                 </code>
               ),
@@ -170,7 +170,7 @@ export default async function PostPage({ params }: Props) {
               href="https://instagram.com/jordisegurap"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-3 bg-[#e8510a] text-white hover:bg-[#ff6a24] transition-colors text-sm font-semibold"
+              className="px-5 py-3 bg-white text-black hover:bg-white/90 transition-colors text-sm font-semibold"
             >
               Instagram
             </a>
