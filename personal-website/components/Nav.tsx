@@ -31,17 +31,11 @@ export default function Nav() {
       <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
         {/* Logo */}
         <a
-          href="#"
+          href="/"
           className="text-white font-bold text-xl tracking-tight hover:text-white/70 transition-colors duration-200"
-          
         >
           JORDI<span className="text-white/30">.</span>
         </a>
-
-        {/* Center label */}
-        <span className="hidden md:block absolute left-1/2 -translate-x-1/2 text-xs text-white/25 tracking-[0.2em] uppercase">
-          Profesional de la IA
-        </span>
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8">
@@ -49,7 +43,7 @@ export default function Nav() {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-white/40 hover:text-white transition-colors duration-200 tracking-wide"
+              className="text-sm text-white/55 hover:text-white transition-colors duration-200 tracking-wide"
             >
               {link.label}
             </a>
