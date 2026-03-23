@@ -49,12 +49,10 @@ export default function Nav() {
             </a>
           ))}
           <a
-            href="https://linkedin.com/in/jordisegurapons"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/#contacto"
             className="text-sm px-4 py-2 bg-white text-black font-semibold hover:bg-white/90 transition-colors duration-200 tracking-wide"
           >
-            Contrátame
+            Colaboremos
           </a>
         </nav>
 
@@ -89,12 +87,11 @@ export default function Nav() {
               </a>
             ))}
             <a
-              href="https://linkedin.com/in/jordisegurapons"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/#contacto"
               className="inline-block px-6 py-3 bg-white text-black font-bold text-center tracking-wide"
+              onClick={() => setMenuOpen(false)}
             >
-              Contrátame
+              Colaboremos
             </a>
           </nav>
         </div>
