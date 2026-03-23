@@ -25,7 +25,7 @@
  */
 
 import Anthropic from "@anthropic-ai/sdk";
-import OpenAI from "openai";
+import OpenAI, { toFile } from "openai";
 import { NextRequest, NextResponse } from "next/server";
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
@@ -120,7 +120,7 @@ async function getTelegramFile(fileId: string): Promise<Buffer> {
 
 /** Transcribe un audio usando OpenAI Whisper */
 async function transcribeAudio(buf: Buffer, fileName: string): Promise<string> {
-  const file = new File([buf], fileName, { type: "audio/ogg" });
+  const file = await toFile(buf, fileName, { type: "audio/ogg" });
   const result = await openai.audio.transcriptions.create({
     model: "whisper-1",
     file,
