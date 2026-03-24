@@ -3,8 +3,14 @@
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
   "functions": {
-    "app/api/telegram/route.ts": {
-      "maxDuration": 60
+    "app/api/telegram/route.ts": { "maxDuration": 60 },
+    "app/api/cron/digest/route.ts": { "maxDuration": 60 },
+    "app/api/newsletter/send/route.ts": { "maxDuration": 60 }
+  },
+  "crons": [
+    {
+      "path": "/api/cron/digest",
+      "schedule": "0 8 * * *"
     }
-  }
+  ]
 }

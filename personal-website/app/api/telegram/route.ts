@@ -27,9 +27,11 @@
 import Anthropic from "@anthropic-ai/sdk";
 import OpenAI, { toFile } from "openai";
 import { NextRequest, NextResponse } from "next/server";
+import { enqueue, dequeue, remove } from "@/lib/queue";
+import { createLinkedInPost } from "@/lib/linkedin";
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY ?? "unset" });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY ?? "unset" });
 
 // ─── Utilidades ──────────────────────────────────────────────────────────────
 
@@ -135,6 +137,65 @@ async function sendTelegram(chatId: number, text: string, markdown = true) {
   );
 }
 
+async function sendTelegramWithKeyboard(
+  chatId: number,
+  text: string,
+  inlineKeyboard: object
+): Promise<number> {
+  const res = await fetch(
+    `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text,
+        parse_mode: "Markdown",
+        disable_web_page_preview: true,
+        reply_markup: inlineKeyboard,
+      }),
+    }
+  );
+  const data = (await res.json()) as { result?: { message_id: number } };
+  return data.result?.message_id ?? 0;
+}
+
+async function editTelegramMessage(
+  chatId: number,
+  messageId: number,
+  text: string,
+  inlineKeyboard?: object
+): Promise<void> {
+  const payload: Record<string, unknown> = {
+    chat_id: chatId,
+    message_id: messageId,
+    text,
+    parse_mode: "Markdown",
+    disable_web_page_preview: true,
+  };
+  if (inlineKeyboard) payload.reply_markup = inlineKeyboard;
+
+  await fetch(
+    `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/editMessageText`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    }
+  );
+}
+
+async function answerCallback(callbackQueryId: string, text?: string): Promise<void> {
+  await fetch(
+    `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/answerCallbackQuery`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ callback_query_id: callbackQueryId, text }),
+    }
+  );
+}
+
 /** Descarga un archivo de Telegram y devuelve su contenido como ArrayBuffer */
 async function getTelegramFile(fileId: string): Promise<ArrayBuffer> {
   const metaRes = await fetch(
@@ -227,6 +288,67 @@ Devuelve ÚNICAMENTE el Markdown completo. Sin comentarios, sin explicaciones ad
   const block = message.content[0];
   if (block.type !== "text") throw new Error("Unexpected response type");
   return block.text;
+}
+
+// ─── LinkedIn & X content generators ─────────────────────────────────────────
+
+async function generateLinkedInPost(input: string, sourceUrl?: string): Promise<string> {
+  const context = sourceUrl
+    ? `Noticia/fuente: ${sourceUrl}\n\nContenido: ${input}`
+    : input;
+
+  const msg = await anthropic.messages.create({
+    model: "claude-sonnet-4-6",
+    max_tokens: 800,
+    system: `Eres el ghostwriter de Jordi Segura Pons para LinkedIn.
+
+Jordi: CEO CenteIA Education, ha formado a +500.000 personas en IA, 32 países, 25 años, Andorra.
+
+Formato de post LinkedIn que funciona para Jordi:
+- Línea 1: hook potente (dato, pregunta incómoda o afirmación polémica) — sin emojis al inicio
+- Línea 2: en blanco
+- Bloques de 1-3 líneas separados por líneas en blanco (LinkedIn corta a 3 líneas si no hay espacios)
+- CTA al final: invita a comentar o compartir experiencia
+- Máx 3 hashtags al final (#InteligenciaArtificial #IA #Futuro por ejemplo)
+- Total: 150-300 palabras
+- Tono: directo, sin corporativismos, primera persona
+
+Devuelve SOLO el texto del post. Sin comillas, sin comentarios.`,
+    messages: [{ role: "user", content: `Escribe un post de LinkedIn sobre esto:\n\n${context}` }],
+  });
+
+  const block = msg.content[0];
+  if (block.type !== "text") throw new Error("Unexpected response");
+  return block.text.trim();
+}
+
+async function generateXThread(input: string, sourceUrl?: string): Promise<string> {
+  const context = sourceUrl
+    ? `Fuente: ${sourceUrl}\n\nContenido: ${input}`
+    : input;
+
+  const msg = await anthropic.messages.create({
+    model: "claude-sonnet-4-6",
+    max_tokens: 1000,
+    system: `Eres el ghostwriter de Jordi Segura Pons para X (Twitter).
+
+Genera un hilo de 5-7 tweets numerados. Formato:
+1/ Hook que para el scroll (máx 240 chars)
+2/ Contexto o problema (máx 240 chars)
+3/ Punto 1 (máx 240 chars)
+4/ Punto 2 (máx 240 chars)
+5/ Punto 3 (máx 240 chars)
+6/ (opcional) Dato impactante (máx 240 chars)
+7/ CTA + mención CenteIA si encaja (máx 240 chars)
+
+Cada tweet separado por línea en blanco. Tono: directo, concreto, con perspectiva real de negocio.
+Devuelve SOLO los tweets numerados. Sin comentarios adicionales.`,
+    messages: [{ role: "user", content: `Crea un hilo sobre:\n\n${context}` }],
+  });
+
+  const block = msg.content[0];
+  if (block.type !== "text") throw new Error("Unexpected response");
+  return block.text.trim();
 }
 
 // ─── GitHub commit ───────────────────────────────────────────────────────────
@@ -363,6 +485,115 @@ async function runPipeline(
   );
 }
 
+// ─── Callback query handler (inline keyboard buttons) ────────────────────────
+
+interface CallbackQuery {
+  id: string;
+  from: { id: number };
+  message?: { chat: { id: number }; message_id: number };
+  data?: string;
+}
+
+async function handleCallbackQuery(cq: CallbackQuery): Promise<void> {
+  const chatId = cq.message?.chat.id;
+  const msgId = cq.message?.message_id;
+  const data = cq.data ?? "";
+
+  if (!chatId) return;
+  await answerCallback(cq.id); // acknowledge immediately
+
+  // ── skip:{id} ──────────────────────────────────────────────────────────────
+  if (data.startsWith("skip:")) {
+    const id = data.slice(5);
+    await remove(id);
+    if (msgId) {
+      await editTelegramMessage(chatId, msgId, `_Saltado_ ✓`, { inline_keyboard: [] });
+    }
+    return;
+  }
+
+  // ── gen:{type}:{id} — generate content from queue item ────────────────────
+  if (data.startsWith("gen:")) {
+    const [, type, id] = data.split(":");
+    const item = await dequeue(id);
+    if (!item) {
+      await sendTelegram(chatId, "❌ Item expirado. Lanza /digest de nuevo.");
+      return;
+    }
+
+    await sendTelegram(chatId, `⏳ Generando ${type === "blog" ? "artículo" : type === "linkedin" ? "post LinkedIn" : "hilo X"}...`);
+
+    try {
+      if (type === "blog") {
+        const mdx = await generateBlogPost({ input: item.content, sourceUrl: item.sourceUrl, sourceType: "url" });
+        const newId = await enqueue({ type: "blog", content: mdx, sourceTitle: item.sourceTitle, sourceUrl: item.sourceUrl, chatId });
+        const preview = mdx.slice(0, 600) + (mdx.length > 600 ? "..." : "");
+        await sendTelegramWithKeyboard(chatId, `📝 *Borrador blog:*\n\n${preview}`, {
+          inline_keyboard: [
+            [{ text: "✅ Publicar", callback_data: `pub:blog:${newId}` }],
+            [{ text: "❌ Descartar", callback_data: `skip:${newId}` }],
+          ],
+        });
+
+      } else if (type === "linkedin") {
+        const post = await generateLinkedInPost(item.content, item.sourceUrl);
+        const newId = await enqueue({ type: "linkedin", content: post, sourceTitle: item.sourceTitle, sourceUrl: item.sourceUrl, chatId });
+        await sendTelegramWithKeyboard(chatId, `💼 *Post LinkedIn:*\n\n${post}`, {
+          inline_keyboard: [
+            [{ text: "✅ Publicar en LinkedIn", callback_data: `pub:linkedin:${newId}` }],
+            [{ text: "❌ Descartar", callback_data: `skip:${newId}` }],
+          ],
+        });
+
+      } else if (type === "thread") {
+        const thread = await generateXThread(item.content, item.sourceUrl);
+        await sendTelegram(chatId, `🐦 *Hilo para X (copia y pega):*\n\n${thread}`, false);
+        await remove(id);
+      }
+    } catch (err) {
+      await sendTelegram(chatId, `❌ Error generando: ${String(err)}`);
+    }
+    return;
+  }
+
+  // ── pub:{platform}:{id} — publish approved content ────────────────────────
+  if (data.startsWith("pub:")) {
+    const [, platform, id] = data.split(":");
+    const item = await dequeue(id);
+    if (!item) {
+      await sendTelegram(chatId, "❌ Item expirado.");
+      return;
+    }
+
+    await sendTelegram(chatId, `📤 Publicando...`);
+
+    try {
+      if (platform === "blog") {
+        const titleMatch = item.content.match(/^title:\s*["']?(.+?)["']?\s*$/m);
+        const rawTitle = titleMatch?.[1] ?? item.sourceTitle ?? "post";
+        const slug = `${today()}-${slugify(rawTitle)}`;
+        const liveUrl = await commitToGitHub(slug, item.content);
+        await remove(id);
+        if (msgId) await editTelegramMessage(chatId, msgId, `✅ *Blog publicado*\n🔗 ${liveUrl}\n_(Vercel ~30s)_`, { inline_keyboard: [] });
+
+      } else if (platform === "linkedin") {
+        const result = await createLinkedInPost(item.content);
+        await remove(id);
+        if (msgId) await editTelegramMessage(chatId, msgId, `✅ *LinkedIn publicado*\n🔗 ${result.url}`, { inline_keyboard: [] });
+
+      } else if (platform === "newsletter") {
+        const { sendNewsletter } = await import("@/lib/newsletter");
+        const sent = await sendNewsletter(item.content);
+        await remove(id);
+        if (msgId) await editTelegramMessage(chatId, msgId, `✅ *Newsletter enviada* a ${sent} suscriptores`, { inline_keyboard: [] });
+      }
+    } catch (err) {
+      await sendTelegram(chatId, `❌ Error publicando: ${String(err)}`);
+    }
+    return;
+  }
+}
+
 // ─── Handler principal ───────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
@@ -376,7 +607,17 @@ export async function POST(req: NextRequest) {
         audio?: { file_id: string; file_name?: string };
         document?: { file_id: string; file_name?: string; mime_type?: string };
       };
+      callback_query?: CallbackQuery;
     };
+
+    // ── Inline keyboard callback ──────────────────────────────────────────────
+    if (body?.callback_query) {
+      const cq = body.callback_query;
+      const allowedId = process.env.TELEGRAM_ALLOWED_ID;
+      if (allowedId && String(cq.from.id) !== allowedId) return NextResponse.json({ ok: true });
+      await handleCallbackQuery(cq);
+      return NextResponse.json({ ok: true });
+    }
 
     const msg = body?.message;
     if (!msg) return NextResponse.json({ ok: true });
@@ -396,19 +637,130 @@ export async function POST(req: NextRequest) {
     if (text === "/start" || text === "/help") {
       await sendTelegram(
         chatId,
-        `🤖 *Blog Bot — jordisegura.com*\n\n` +
-        `Mándame cualquiera de estas cosas:\n\n` +
-        `📌 */post [idea]*\n` +
-        `_Ej: /post Por qué el 90% de las empresas fracasan con la IA_\n\n` +
-        `🔗 */post [URL]*\n` +
-        `_Ej: /post https://techcrunch.com/..._\n\n` +
-        `🔗🔗 */post [prompt] [URL1] [URL2]*\n` +
-        `_Ej: /post Cómo la IA soluciona el clima https://x.com/... https://paper.com/..._\n\n` +
-        `📄 */post [artículo largo]*\n` +
-        `_Pega texto y lo adapto a tu voz_\n\n` +
-        `🎙️ *Manda un audio* — Lo transcribo y genero un borrador\n\n` +
-        `👁 */draft [lo mismo]* — Genera sin publicar\n\n` +
-        `En ~30s el artículo está en vivo en jordisegura.com/blog`
+        `🤖 *Content Bot — jordisegura.com*\n\n` +
+        `*── BLOG ──*\n` +
+        `📌 */post [idea o URL]* — Genera y publica en el blog\n` +
+        `👁 */draft [idea o URL]* — Genera sin publicar\n\n` +
+        `*── REDES ──*\n` +
+        `💼 */linkedin [idea o URL]* — Post LinkedIn (con aprobación)\n` +
+        `🐦 */thread [idea o URL]* — Hilo X (texto para copiar)\n\n` +
+        `*── DIGEST & NEWSLETTER ──*\n` +
+        `📰 */digest* — Fuerza el digest de noticias ahora\n` +
+        `📧 */newsletter [contexto?]* — Genera borrador newsletter\n\n` +
+        `*── OTROS ──*\n` +
+        `🎙️ *Audio/voz* — Transcribo y genero borrador\n` +
+        `📋 *CSV/TXT* — Batch de ideas (1 por línea)\n\n` +
+        `El digest llega automáticamente cada mañana a las 8h UTC.`
+      );
+      return NextResponse.json({ ok: true });
+    }
+
+    // ── /digest ──
+    if (text === "/digest" || text.startsWith("/digest ")) {
+      await sendTelegram(chatId, `📰 Scrapeando noticias...`);
+      const siteUrl = process.env.SITE_URL ?? "https://jordisegura.com";
+      const cronSecret = process.env.CRON_SECRET ?? "";
+      const res = await fetch(`${siteUrl}/api/cron/digest?secret=${encodeURIComponent(cronSecret)}`);
+      const data = (await res.json()) as { ok: boolean; stories?: number; message?: string };
+      if (data.ok) {
+        await sendTelegram(chatId, `✅ Digest enviado con ${data.stories ?? 0} historias.`);
+      } else {
+        await sendTelegram(chatId, `❌ Error en el digest: ${data.message ?? "desconocido"}`);
+      }
+      return NextResponse.json({ ok: true });
+    }
+
+    // ── /linkedin ──
+    if (text.startsWith("/linkedin ")) {
+      const input = text.slice(10).trim();
+      if (!input) {
+        await sendTelegram(chatId, "❌ Escribe algo después de /linkedin");
+        return NextResponse.json({ ok: true });
+      }
+      await sendTelegram(chatId, `💼 Generando post LinkedIn...`);
+
+      let content = input;
+      let sourceUrl: string | undefined;
+      const { urls, prompt } = extractUrlsAndPrompt(input);
+      if (urls.length > 0) {
+        await sendTelegram(chatId, `🌐 Leyendo fuente...`);
+        try {
+          const fetched = await fetchAnyUrl(urls[0]);
+          content = prompt ? `${prompt}\n\n${fetched}` : fetched;
+          sourceUrl = urls[0];
+        } catch { /* use raw input */ }
+      }
+
+      const post = await generateLinkedInPost(content, sourceUrl);
+      const id = await enqueue({ type: "linkedin", content: post, sourceUrl, chatId });
+      await sendTelegramWithKeyboard(chatId, `💼 *Post LinkedIn:*\n\n${post}`, {
+        inline_keyboard: [
+          [{ text: "✅ Publicar en LinkedIn", callback_data: `pub:linkedin:${id}` }],
+          [{ text: "❌ Descartar", callback_data: `skip:${id}` }],
+        ],
+      });
+      return NextResponse.json({ ok: true });
+    }
+
+    // ── /thread ──
+    if (text.startsWith("/thread ")) {
+      const input = text.slice(8).trim();
+      if (!input) {
+        await sendTelegram(chatId, "❌ Escribe algo después de /thread");
+        return NextResponse.json({ ok: true });
+      }
+      await sendTelegram(chatId, `🐦 Generando hilo X...`);
+
+      let content = input;
+      let sourceUrl: string | undefined;
+      const { urls, prompt } = extractUrlsAndPrompt(input);
+      if (urls.length > 0) {
+        await sendTelegram(chatId, `🌐 Leyendo fuente...`);
+        try {
+          const fetched = await fetchAnyUrl(urls[0]);
+          content = prompt ? `${prompt}\n\n${fetched}` : fetched;
+          sourceUrl = urls[0];
+        } catch { /* use raw input */ }
+      }
+
+      const thread = await generateXThread(content, sourceUrl);
+      await sendTelegram(chatId, `🐦 *Hilo para X (copia y pega):*\n\n${thread}`, false);
+      return NextResponse.json({ ok: true });
+    }
+
+    // ── /newsletter ──
+    if (text === "/newsletter" || text.startsWith("/newsletter ")) {
+      const context = text.startsWith("/newsletter ") ? text.slice(12).trim() : undefined;
+      await sendTelegram(chatId, `📧 Generando newsletter "IA Sin Filtros"...`);
+
+      const siteUrl = process.env.SITE_URL ?? "https://jordisegura.com";
+      const cronSecret = process.env.CRON_SECRET ?? "";
+
+      const res = await fetch(`${siteUrl}/api/newsletter/send`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cronSecret}`,
+        },
+        body: JSON.stringify({ action: "generate", context, chatId }),
+      });
+
+      const data = (await res.json()) as { ok: boolean; id?: string; preview?: string };
+      if (!data.ok || !data.id) {
+        await sendTelegram(chatId, `❌ Error generando newsletter.`);
+        return NextResponse.json({ ok: true });
+      }
+
+      const preview = (data.preview ?? "").slice(0, 500);
+      await sendTelegramWithKeyboard(
+        chatId,
+        `📧 *Newsletter lista. Preview:*\n\n${preview}...`,
+        {
+          inline_keyboard: [
+            [{ text: "✅ Enviar a suscriptores", callback_data: `pub:newsletter:${data.id}` }],
+            [{ text: "❌ Descartar", callback_data: `skip:${data.id}` }],
+          ],
+        }
       );
       return NextResponse.json({ ok: true });
     }
