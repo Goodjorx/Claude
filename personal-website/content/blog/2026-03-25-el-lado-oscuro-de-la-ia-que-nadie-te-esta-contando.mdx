@@ -1,0 +1,71 @@
+---
+title: "El lado oscuro de la IA que nadie te está contando"
+date: "2026-03-25"
+excerpt: "Un simple 'pip install' robó credenciales de miles de devs. La IA democratiza el software, pero también democratiza los ataques."
+category: "IA"
+readTime: "5 min"
+---
+
+La semana pasada, miles de desarrolladores instalaron una librería de IA sin pensar dos veces.
+
+Un comando. Tres segundos. Y sin saberlo, alguien en algún lugar del mundo ya tenía sus claves de AWS, sus credenciales de Kubernetes, su historial de terminal y hasta las llaves de sus wallets de crypto.
+
+No es ciencia ficción. Es lo que pasó con el ataque a litellm, una de las librerías más usadas para conectar modelos de lenguaje. Andrej Karpathy —ex OpenAI, ex Tesla— lo señaló públicamente esta semana. Y si Karpathy lo considera suficientemente grave para tuitearlo, yo lo considero suficientemente grave para que hablemos de ello.
+
+---
+
+## El problema no es la IA. El problema es la comoditización.
+
+Llevamos dos años normalizando algo que debería darnos respeto: instalar software de IA como si fuera pedir comida a domicilio.
+
+`pip install litellm`. `npm install openai`. `pip install langchain`.
+
+Lo hacemos sin leer el código. Sin verificar la cadena de suministro. Sin preguntarnos quién mantiene esa librería, desde dónde, con qué incentivos.
+
+Y tiene sentido que lo hagamos así, porque el ecosistema de IA se ha construido con una promesa implícita: **acceso fácil, resultados rápidos, cero fricción.** Los modelos se han comoditizado. Las APIs se han comoditizado. Y ahora el software que las conecta también.
+
+El problema es que cuando algo se comoditiza, la guardia baja. Y cuando la guardia baja en seguridad, alguien lo aprovecha.
+
+---
+
+## Tres cosas que nadie te dice cuando empiezas con IA
+
+**1. La superficie de ataque creció exponencialmente y nadie habló de ello.**
+
+Antes un developer trabajaba con tres o cuatro dependencias críticas. Ahora un proyecto de IA mediano puede tener cincuenta. Cada una con su propio repositorio, su propio mantenedor, su propia historia. El ataque a litellm no fue un hackeo sofisticado de película: fue alguien que publicó una versión maliciosa en PyPI aprovechando la confianza ciega del ecosistema. Supply chain attack. Clásico, efectivo y escalable.
+
+Cuanto más usamos IA para construir software, más rápido crece esa superficie. Y el 90% de los equipos no tiene un proceso serio de revisión de dependencias.
+
+**2. La velocidad de adopción está superando a la velocidad de madurez.**
+
+He formado a más de 500.000 personas en IA en 32 países. Y te puedo decir con certeza que la mayoría aprende a usar la IA pero casi nadie aprende a hacerlo con criterio de seguridad. No porque sean descuidados. Sino porque el ecosistema premia la velocidad y no penaliza el descuido... hasta que te penaliza todo de golpe.
+
+Estamos en un momento donde cualquier startup puede lanzar un producto de IA en semanas. Eso es una ventaja competitiva brutal. Pero también significa que estamos construyendo sobre cimientos que nadie ha auditado en serio.
+
+**3. Los atacantes también usan IA. Y son muy buenos.**
+
+Esto es lo que más me preocupa a largo plazo. Los mismos modelos que usamos para automatizar código, para generar tests, para hacer deploy más rápido... están disponibles para quien quiera usarlos con otros fines. Identificar librerías populares con mantenedores poco activos. Generar código malicioso que evita los scanners. Escalar ataques que antes requerían equipos enteros.
+
+La democratización de la IA no tiene dirección moral. Va en las dos direcciones.
+
+---
+
+## Lo que yo hago y lo que te recomendaría hacer
+
+No te voy a decir que dejes de usar librerías de IA. Sería hipócrita y además inútil. Yo las uso cada día.
+
+Pero sí te digo lo que ha cambiado en mi forma de trabajar:
+
+- **Antes de instalar cualquier dependencia nueva**, compruebo la actividad del repositorio, el número de mantenedores y si hubo releases sospechosos en los últimos días. Cinco minutos que pueden ahorrarte una catástrofe.
+- **Las credenciales nunca en variables de entorno en texto plano.** Parece obvio. No lo es para el 70% de los proyectos que he visto por dentro.
+- **Menos es más.** Si puedo hacer algo con la API oficial directamente en lugar de instalar una capa de abstracción encima, lo hago. Cada librería adicional es una puerta más que vigilar.
+
+---
+
+La IA está cambiando quién puede construir software y a qué velocidad. Eso es real y es bueno.
+
+Pero la velocidad sin criterio no es productividad. Es deuda que pagas con intereses.
+
+Memento mori. El tiempo que pierdes reconstruyendo lo que te robaron no vuelve.
+
+Si estás formando a tu equipo en IA y nadie os habla de esto, en **CenteIA Education** es parte de lo que hacemos: no solo enseñamos a usar las herramientas, sino a entender lo que hay debajo. Porque saber usar IA sin entender los riesgos es como saber conducir sin conocer los frenos.
